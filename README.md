@@ -50,7 +50,7 @@ The application will be targeted at members of the general public looking for an
 
 ## Application Architecture Diagram
 
-![Application Architecture Diagram](docs/application_architecture_diagram.png)
+![Application Architecture Diagram](docs/application_archittecture_diagram.png)
 
 Users access the application through various devices with different screen sizes and capabilities. The front-end is designed to be responsive, ensuring a consistent user experience across all devices. The UI is built using React.js, which manages the rendering of views and handles user interactions. The UI is responsive, adapting to various device types. It uses modern CSS frameworks for styling and supports component-based architecture for reusability. The backend is implemented using  MongoDB serves as the NoSQL database where data is stored in a document-oriented format (JSON-like). Mongoose is used to define schemas, enforce data validation, and facilitate interaction with the database through models.Node.js and Express.js. It handles business logic, processes incoming requests, and communicates with the database.
 
