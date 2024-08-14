@@ -46,7 +46,7 @@ The application will be targeted at members of the general public looking for an
 - React
 - Cloudinary
 
-## Dataflow Diagram
+## Dataflow Diagrams
 
 ## Application Architecture Diagram
 
@@ -58,10 +58,54 @@ Users access the application through various devices with different screen sizes
 
 ## Wireframes
 
+### Landing/Homepage
+
+![Wireframe of Homepage](./docs/wireframe_homepage.drawio.png)
+
+### Price Page
+
+![Wireframe of Price Page](./docs/wireframe_prices.drawio.png)
+
+### Equipment Page
+
+![Wireframe of Equipment Page](./docs/wireframe_equipment.drawio.png)
+
+### Booking Details Page
+
+![Wireframe of Booking Details Page](./docs/wireframe_booking_details.drawio.png)
+
+### Manage Booking Page
+
+![Wireframe of Manage Booking Page](./docs/wireframe_manage_bookings.drawio.png)
+
+### Update Booking Page
+
+![Wireframe of Update Booking Page](./docs/wireframe_update_booking.drawio.png)
+
+### Register(New User) Page
+
+### Sign In Page
+
+### Admin Homepage
+
+### Admin Bookings Page
+
+### Admin Manage Equipment Page
+
+### Admin Add Equipment Page
+
 ## Trello
 
-### [Link to Trello Board](https://trello.com/b/rG8J0pFg/t3a2-full-stack-app)
+### Full Trello Board can be viewed [here.](https://trello.com/b/rG8J0pFg/t3a2-full-stack-app)
 
-#### This is what it currently looks like as of **13/08/2024**. More features may be added
+#### Initial Trello Board (13/08/2024)
 
-![1](./docs/trello-1.png)
+![Screenshot of Trello Board on 13/08/2024](./docs/trello_1.png)
+
+#### Trello Board Halfway Through Part A (15/08/2024)
+
+![Screenshot of Trello Board on 15/08/2024]()
+
+#### Trello Board at End of Part A (18/08/2024)
+
+![Screenshot of Trello Board on 18/08/2024]()
