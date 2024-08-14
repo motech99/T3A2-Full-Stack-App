@@ -225,7 +225,7 @@ As a user looking to hire some equipment, I want to be able to view all of the e
 
 #### Trello Board Halfway Through Part A (15/08/2024)
 
-![Screenshot of Trello Board on 15/08/2024]()
+![Screenshot of Trello Board on 15/08/2024](./docs/trello_2.png)
 
 #### Trello Board at End of Part A (18/08/2024)
 
