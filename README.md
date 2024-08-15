@@ -128,11 +128,6 @@ As a user looking to hire some equipment, I want to be able to view all of the e
 - **Priority:** Medium
 - **Accept/Reject:** Accept
 
-- **Refinement:** As a frequent registered user I want to be able to update my details so that they accurately represent my new details.
-
-  - **Priority:** Medium
-  - **Accept/Reject:** Accept
-
 **User Story:** As a registered user with a booking, I want to be able to view my booking, so that I can ensure the details are correct.
 
 - **Refinement 1:** As a registered user with a booking, I want to be able to view all of the relevant details so that I can remember the equipment, date, time, quantity and price of my booking.
@@ -205,7 +200,11 @@ As a user looking to hire some equipment, I want to be able to view all of the e
 
 ### Register(New User) Page
 
+![Wireframe of Register Page](./docs/wireframe_register.drawio.png)
+
 ### Sign In Page
+
+![Wireframe of Sign In Page](./docs/wireframe_login.drawio.png)
 
 ### Admin Homepage
 
