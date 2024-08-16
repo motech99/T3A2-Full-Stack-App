@@ -220,7 +220,7 @@ As a user looking to hire some equipment, I want to be able to view all of the e
 
 ### Admin Add Equipment Page
 
-![Wireframe of Admin Add Equipment Page](./docs/wireframe_add_equipment.drawio.png)
+![Wireframe of Admin Add Equipment Page](./docs/wireframe_admin_add_equipment.drawio.png)
 
 ## Trello
 
