@@ -208,11 +208,19 @@ As a user looking to hire some equipment, I want to be able to view all of the e
 
 ### Admin Homepage
 
+![Wireframe of Homepage](./docs/wireframe_admin_homepage.drawio.png)
+
 ### Admin Bookings Page
 
-### Admin Manage Equipment Page
+![Wireframe of Admin Bookings Page](./docs/wireframe_admin_bookings.drawio.png)
+
+### Admin Equipment Page
+
+![Wireframe of Admin Equipment Page](./docs/wireframe_admin_equipment.drawio.png)
 
 ### Admin Add Equipment Page
+
+![Wireframe of Admin Add Equipment Page](./docs/wireframe_add_equipment.drawio.png)
 
 ## Trello
 
