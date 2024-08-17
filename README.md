@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Description](#description)
-- [Dataflow Diagram](#dataflow-diagram)
+- [Dataflow Diagrams](#dataflow-diagrams)
 - [Application Architecture Diagram](#application-architecture-diagram)
 - [User Stories](#user-stories)
 - [Wireframes](#wireframes)
@@ -198,8 +198,7 @@ Users can access the application through various devices with different screen s
 
 #### Trello Board Halfway Through Part A (15/08/2024)
 
-![Screenshot of Trello Board on 15/08/2024]()
-
 #### Trello Board at End of Part A (18/08/2024)
 
-![Screenshot of Trello Board on 18/08/2024]()
+
+![Screenshot of Trello Board on 18/08/2024](./docs/trello_final_part_a.png)
