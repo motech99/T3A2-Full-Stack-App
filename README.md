@@ -48,9 +48,103 @@ The application will be targeted at members of the general public looking for an
 
 ## Dataflow Diagrams
 
+### Representation Explanation
+
+**Process:** This refers to the actions carried out, such as user registration, booking creation, etc.
+
+**Input Data:** This is the information provided by the user or admin, such as login credentials or booking details.
+
+**Data Store Accessed/Updated:** This indicates which data store is being accessed or updated due to the process.
+
+**Output Data:** This is the result of the process, such as a confirmation message or a list of equipment.
+
+### User Authentication
+
+![User Authentication Dataflow](./docs/user_authentication_dataflow.png)
+
+#### 1.0 User Authentication
+
+1.1 Registration:
+
+- **Input:** User Registration Data
+- **Output:** Confirmation to User
+- **Data Store:** User Data Store
+
+1.2 Login/Authorisation:
+
+- **Input:** Login Credentials
+- **Output:** Authorisation Response
+- **Data Store:** User Data Store
+
+### Equipment Management
+
+![Equipment Management Dataflow](./docs/equipment_management_dataflow.png)
+
+#### 2.0 Equipment Management
+
+2.1 List Equipment:
+
+- **Input:** Equipment Request
+- **Output:** Equipment List to User/Admin
+- **Data Store:** Equipment Data Store
+
+2.2 Add Equipment (Admin):
+
+- **Input:** New Equipment Data
+- **Output:** Confirmation to Admin
+- **Data Store:** Equipment Data Store
+
+2.3 Update Equipment (Admin):
+
+- **Input:** Updated Equipment Data
+- **Output:** Confirmation to Admin
+- **Data Store:** Equipment Data Store
+
+2.4 Delete Equipment (Admin):
+
+- **Input:** Equipment ID
+- **Output:** Confirmation to Admin
+- **Data Store:** Equipment Data Store
+
+2.5 Image Upload (Admin):
+
+- **Input:** Image File
+- **Output:** Image URL stored in Equipment Data Store
+- **Data Store:** Cloudinary (External Service) and Equipment Data Store
+
+### Booking Management
+
+![Booking Management Dataflow](./docs/booking_management_dataflow.png)
+
+#### 3.0 Booking Management
+
+3.1 Create Booking:
+
+- **Input:** Booking Details
+- **Output:** Confirmation to User
+- **Data Store:** Booking Data Store
+
+3.2 Update Booking:
+
+- **Input:** Updated Booking Data
+- **Output:** Confirmation to User
+- **Data Store:** Booking Data Store
+
+3.3 Delete Booking:
+
+- **Input:** Booking ID
+- **Output:** Confirmation to User
+- **Data Store:** Booking Data Store
+
+3.4 View Hire Log (Admin):
+
+- **Input:** Log Request
+- **Output:** Hire Log Data to Admin
+- **Data Store:** Booking Data Store
+
 ## Application Architecture Diagram
 
-![Application Architecture Diagram](docs/application_architecture_diagram.png)
+![Application Architecture Diagram](./docs/application_architecture_diagram.png)
 
 Users can access the application through various devices with different screen sizes and capabilities. The front-end is designed to be responsive, ensuring a consistent user experience across all devices. The UI, deployed on Netifly, is built using React.js, which manages the rendering of views and handles user interactions. The UI is responsive, adapting to various device types. It uses modern CSS frameworks for styling and supports component-based architecture for reusability. The backend, deployed on Atlas, is implemented using MongoDB serves as the NoSQL database where data is stored in a document-oriented format (JSON-like). Mongoose is used to define schemas, enforce data validation, and facilitate interaction with the database through Express.js. The back-end web server is deployed on render and handles business logic, processes incoming requests, and communicates with the database.
 
