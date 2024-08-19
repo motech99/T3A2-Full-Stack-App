@@ -193,7 +193,6 @@ In addition to this, as we progressed through the rest of the project and starte
 | As an admin I want to be able to filter bookings so that I can see the bookings for today and I can prepare the appropriate equipment.              | Medium       | Accept            |
 | As an admin I want to be able to grant admin privileges so that if my business grows I can have multiple admins.                                    | Low          | Reject            |
 
-
 ## Wireframes
 
 ### Landing/Homepage
