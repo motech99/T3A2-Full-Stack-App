@@ -7,3 +7,6 @@ const hireOptionSchema = new mongoose.Schema({
 })
 
 const HireOption = mongoose.model('HireOption', hireOptionSchema);
+
+
+export default HireOption
