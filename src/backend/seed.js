@@ -1,30 +1,31 @@
 // // import Booking from "./models/bookings"
 // import Equipment from "./models/equipment.js"
 // import HireOption from "./models/hireOptions.js"
-// import User from "./models/users.js"
+import mongoose from 'mongoose'
+import {User} from "./db.js"
 
 
-// const users = [
-//     {
-//         firstName: "John",
-//         lastName: "Doe",
-//         email: "john@example.com",
-//         password: "password123",
-//         isAdmin: true
-//     },
-//     {
-//         firstName: "Jane",
-//         lastName: "Smith",
-//         email: "jane@example.com",
-//         password: "secret123",
-//         isAdmin: false
-//     }
-// ]
+const users = [
+    {
+        firstName: "John",
+        lastName: "Doe",
+        email: "john@example.com",
+        password: "password123",
+        isAdmin: true
+    },
+    {
+        firstName: "Jane",
+        lastName: "Smith",
+        email: "jane@example.com",
+        password: "secret123",
+        isAdmin: false
+    }
+]
 
-// await User.deleteMany()
-// console.log('Deleted Users')
-// await User.insertMany(users)
-// console.log('Added users')
+await User.deleteMany()
+console.log('Deleted Users')
+await User.insertMany(users)
+console.log('Added users')
 
 // const hireOptions = [
 //     {
@@ -149,3 +150,5 @@
 // console.log('Deleted Equipment')
 // await Equipment.insertMany(equipment)
 // console.log('Added Equipment')
+
+mongoose.disconnect()
