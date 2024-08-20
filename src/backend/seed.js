@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import {User, HireOption, Equipment} from "./db.js"
+import {User, HireOption, Equipment, Booking} from "./db.js"
 
 
 const users = [
@@ -22,7 +22,7 @@ const users = [
 
 await User.deleteMany()
 console.log('Deleted Users')
-await User.insertMany(users)
+const userList = await User.insertMany(users)
 console.log('Added users')
 
 const hireOptions = [
@@ -147,7 +147,34 @@ const equipment = [
 
 await Equipment.deleteMany()
 console.log('Deleted Equipment')
-await Equipment.insertMany(equipment)
+const items = await Equipment.insertMany(equipment)
 console.log('Added Equipment')
+
+const bookings = [
+    {
+        user: userList[0],
+        equipment: items[0],
+        date: new Date(),
+        time: new Date(),
+        hireOption: options[0],
+        quantity: 2
+    },
+    {
+        user: userList[1],
+        equipment: items[1],
+        date: new Date(),
+        time: new Date(),
+        hireOption: options[1],
+        quantity: 1
+    }
+]
+
+await Booking.deleteMany()
+console.log('Deleted Bookings')
+await Booking.insertMany(bookings)
+console.log('Added Bookings')
+
+
+console.log('Seeding Completed!')
 
 mongoose.disconnect()

@@ -55,4 +55,18 @@ const equipmentSchema = new mongoose.Schema({
 const Equipment  = new mongoose.model('Equipment', equipmentSchema)
 
 
-export { User, HireOption, Equipment } 
+// Booking Schema
+const bookingSchema = new mongoose.Schema({
+    user: { type: mongoose.Schema.Types.ObjectId, ref: User },
+    equipment: { type: mongoose.Schema.Types.ObjectId, ref: Equipment },
+    date: { type: Date, required: true },
+    time: { type: Date, required: true },
+    hireOption: { type: mongoose.Schema.Types.ObjectId, ref: HireOption },
+    quantity: { type: Number, required: true }
+})
+
+
+// Booking Model
+const Booking  = new mongoose.model('Booking', bookingSchema)
+
+export { User, HireOption, Equipment, Booking } 
