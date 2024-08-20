@@ -9,4 +9,4 @@
 // const HireOption = mongoose.model('HireOption', hireOptionSchema);
 
 
-// export default HireOption
+// export {HireOption}

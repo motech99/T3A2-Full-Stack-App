@@ -4,7 +4,6 @@ import cors from 'cors'
 import { User, HireOption} from './db.js'
 
 
-
 const app = express()
 
 // Middleware

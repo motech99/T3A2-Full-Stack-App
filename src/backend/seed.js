@@ -1,8 +1,5 @@
-// // import Booking from "./models/bookings"
-// import Equipment from "./models/equipment.js"
-// import HireOption from "./models/hireOptions.js"
 import mongoose from 'mongoose'
-import {User, HireOption} from "./db.js"
+import {User, HireOption, Equipment} from "./db.js"
 
 
 const users = [
@@ -49,107 +46,108 @@ const hireOptions = [
 
 await HireOption.deleteMany()
 console.log('Deleted Hire Options')
-await HireOption.insertMany(hireOptions)
+const options = await HireOption.insertMany(hireOptions)
 console.log('Added Hire Options')
 
-// const equipment = [
-//     {
-//         item: "Bike",
-//         quantity: 15,
-//         hireOption: [
-//             {
-//                 hireOption: option[0],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[1],
-//                 price: 30
-//             },
-//             {
-//                 hireOption: option[2],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[3],
-//                 price: 20
-//             }
-//         ],
-//         image: "bike.jpg"
-//     },
-//     {
-//         item: "Stand Up Paddle Board",
-//         quantity: 5,
-//         hireOption: [
-//             {
-//                 hireOption: option[0],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[1],
-//                 price: 30
-//             },
-//             {
-//                 hireOption: option[2],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[3],
-//                 price: 20
-//             }
-//         ],
-//         image: "sup.jpg"
-//     },
-//     {
-//         item: "Surfboard",
-//         quantity: 5,
-//         hireOption: [
-//             {
-//                 hireOption: option[0],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[1],
-//                 price: 30
-//             },
-//             {
-//                 hireOption: option[2],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[3],
-//                 price: 20
-//             }
-//         ],
-//         image: "surfboard.jpg"
-//     },
-//     {
-//         item: "Kayak",
-//         quantity: 5,
-//         hireOption: [
-//             {
-//                 hireOption: option[0],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[1],
-//                 price: 30
-//             },
-//             {
-//                 hireOption: option[2],
-//                 price: 20
-//             },
-//             {
-//                 hireOption: option[3],
-//                 price: 20
-//             }
-//         ],
-//         image: "kayak.jpg"
-//     },
-// ]
 
-// await Equipment.deleteMany()
-// console.log('Deleted Equipment')
-// await Equipment.insertMany(equipment)
-// console.log('Added Equipment')
+const equipment = [
+    {
+        item: "Bike",
+        quantity: 15,
+        hireOption: [
+            {
+                hireOption: options[0],
+                price: 25
+            },
+            {
+                hireOption: options[1],
+                price: 40
+            },
+            {
+                hireOption: options[2],
+                price: 60
+            },
+            {
+                hireOption: options[3],
+                price: 80
+            }
+        ],
+        image: "bike.jpg"
+    },
+    {
+        item: "Stand Up Paddle Board",
+        quantity: 5,
+        hireOption: [
+            {
+                hireOption: options[0],
+                price: 15
+            },
+            {
+                hireOption: options[1],
+                price: 25
+            },
+            {
+                hireOption: options[2],
+                price: 40
+            },
+            {
+                hireOption: options[3],
+                price: 60
+            }
+        ],
+        image: "sup.jpg"
+    },
+    {
+        item: "Surfboard",
+        quantity: 5,
+        hireOption: [
+            {
+                hireOption: options[0],
+                price: 20
+            },
+            {
+                hireOption: options[1],
+                price: 30
+            },
+            {
+                hireOption: options[2],
+                price: 50
+            },
+            {
+                hireOption: options[3],
+                price: 70
+            }
+        ],
+        image: "surfboard.jpg"
+    },
+    {
+        item: "Kayak",
+        quantity: 5,
+        hireOption: [
+            {
+                hireOption: options[0],
+                price: 20
+            },
+            {
+                hireOption: options[1],
+                price: 30
+            },
+            {
+                hireOption: options[2],
+                price: 50
+            },
+            {
+                hireOption: options[3],
+                price: 80
+            }
+        ],
+        image: "kayak.jpg"
+    },
+]
+
+await Equipment.deleteMany()
+console.log('Deleted Equipment')
+await Equipment.insertMany(equipment)
+console.log('Added Equipment')
 
 mongoose.disconnect()

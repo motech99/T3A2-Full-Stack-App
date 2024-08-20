@@ -13,7 +13,8 @@ catch (err) {
     console.error(err)
 }
 
-const User  = new mongoose.model('User', {
+// User Schema
+const userSchema = new mongoose.Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -21,10 +22,37 @@ const User  = new mongoose.model('User', {
     isAdmin: { type: Boolean, required: true, default: false}
 })
 
-const HireOption  = new mongoose.model('HireOption', {
+// User Model
+const User  = new mongoose.model('User', userSchema)
+
+
+// Hire Option Schema
+const hireOptionSchema = new mongoose.Schema({
     option: { type: String, required: true },
     length: { type: Number, required: true }
 })
 
 
-export { User, HireOption } 
+// Hire Option Model
+const HireOption  = new mongoose.model('HireOption', hireOptionSchema)
+
+
+// Equipment Schema
+const equipmentSchema = new mongoose.Schema({
+    item: { type: String, required: true },
+    quantity: { type: Number, required: true },
+    hireOption: [
+        {
+            hireOption: {type: mongoose.Schema.Types.ObjectId, ref: HireOption, required: true},
+            price: { type: Number, required: true }
+        }
+    ],
+    image: { type: String, required: true}
+})
+
+
+// Equipment Model
+const Equipment  = new mongoose.model('Equipment', equipmentSchema)
+
+
+export { User, HireOption, Equipment } 
