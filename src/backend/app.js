@@ -1,8 +1,9 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import {HireOption, Equipment, Booking} from './db.js'
+import {Equipment, Booking} from './db.js'
 import userRoutes from './routes/user_routes.js'
+import hireOptionsRoutes from './routes/hire_options_routes.js'
 
 
 const app = express()
@@ -15,8 +16,9 @@ app.get('/', (req, res) => res.send({ info: 'GC Activity Rentals' }))
 
 app.use(userRoutes)
 
-// Get all Hire Options
-app.get('/hireOptions', async (req, res) => res.send(await HireOption.find())) 
+app.use(hireOptionsRoutes)
+
+
 
 // Get all Equipment Options
 app.get('/equipment', async (req, res) => res.send(await Equipment.find()))
