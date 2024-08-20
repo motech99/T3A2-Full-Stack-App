@@ -54,7 +54,7 @@ const equipment = [
     {
         item: "Bike",
         quantity: 15,
-        hireOption: [
+        rates: [
             {
                 hireOption: options[0],
                 price: 25
@@ -77,7 +77,7 @@ const equipment = [
     {
         item: "Stand Up Paddle Board",
         quantity: 5,
-        hireOption: [
+        rates: [
             {
                 hireOption: options[0],
                 price: 15
@@ -100,7 +100,7 @@ const equipment = [
     {
         item: "Surfboard",
         quantity: 5,
-        hireOption: [
+        rates: [
             {
                 hireOption: options[0],
                 price: 20
@@ -123,7 +123,7 @@ const equipment = [
     {
         item: "Kayak",
         quantity: 5,
-        hireOption: [
+        rates: [
             {
                 hireOption: options[0],
                 price: 20

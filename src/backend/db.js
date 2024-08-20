@@ -41,7 +41,7 @@ const HireOption  = new mongoose.model('HireOption', hireOptionSchema)
 const equipmentSchema = new mongoose.Schema({
     item: { type: String, required: true },
     quantity: { type: Number, required: true },
-    hireOption: [
+    rates: [
         {
             hireOption: {type: mongoose.Schema.Types.ObjectId, ref: HireOption, required: true},
             price: { type: Number, required: true }
@@ -57,11 +57,11 @@ const Equipment  = new mongoose.model('Equipment', equipmentSchema)
 
 // Booking Schema
 const bookingSchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: User },
-    equipment: { type: mongoose.Schema.Types.ObjectId, ref: Equipment },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true },
+    equipment: { type: mongoose.Schema.Types.ObjectId, ref: Equipment, required: true },
     date: { type: Date, required: true },
     time: { type: Date, required: true },
-    hireOption: { type: mongoose.Schema.Types.ObjectId, ref: HireOption },
+    hireOption: { type: mongoose.Schema.Types.ObjectId, ref: HireOption, required: true},
     quantity: { type: Number, required: true }
 })
 

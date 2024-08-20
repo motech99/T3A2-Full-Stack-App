@@ -34,7 +34,7 @@ app.get('/equipment', async (req, res) => res.send(await Equipment.find()))
 // Get single equipment option
 app.get('/equipment/:id', async (req, res) => {
     try {
-        const equipment = await Equipment.findById(req.params.id).populate("hireOption.hireOption")
+        const equipment = await Equipment.findById(req.params.id)
         if (equipment) {
             res.send(equipment)
         } else {
@@ -47,7 +47,7 @@ app.get('/equipment/:id', async (req, res) => {
 })
 
 // Get all Bookings
-app.get('/bookings', async (req, res) => res.send(await Booking.find().populate("user.firstName equipment")))
+app.get('/bookings', async (req, res) => res.send(await Booking.find()))
 
 // Routers
 
