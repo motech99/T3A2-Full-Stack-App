@@ -1,9 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import {Equipment, Booking} from './db.js'
+import {Booking} from './db.js'
 import userRoutes from './routes/user_routes.js'
 import hireOptionsRoutes from './routes/hire_options_routes.js'
+import equipmentRoutes from './routes/equipment_routes.js'
 
 
 const app = express()
@@ -18,25 +19,9 @@ app.use(userRoutes)
 
 app.use(hireOptionsRoutes)
 
+app.use(equipmentRoutes)
 
 
-// Get all Equipment Options
-app.get('/equipment', async (req, res) => res.send(await Equipment.find()))
-
-// Get single equipment option
-app.get('/equipment/:id', async (req, res) => {
-    try {
-        const equipment = await Equipment.findById(req.params.id)
-        if (equipment) {
-            res.send(equipment)
-        } else {
-            res.status(404).send({ error: 'Equipment not found' })
-        }
-    }
-    catch (err) {
-        res.status(400).send({ error: err.message })
-    }
-})
 
 // Get all Bookings
 app.get('/bookings', async (req, res) => res.send(await Booking.find()))
