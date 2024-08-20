@@ -2,7 +2,7 @@
 // import Equipment from "./models/equipment.js"
 // import HireOption from "./models/hireOptions.js"
 import mongoose from 'mongoose'
-import {User} from "./db.js"
+import {User, HireOption} from "./db.js"
 
 
 const users = [
@@ -22,34 +22,35 @@ const users = [
     }
 ]
 
+
 await User.deleteMany()
 console.log('Deleted Users')
 await User.insertMany(users)
 console.log('Added users')
 
-// const hireOptions = [
-//     {
-//         option: "1 hour",
-//         length: 60
-//     },
-//     {
-//         option: "2 hours",
-//         length: 120
-//     },
-//     {
-//         option: "1/2 day",
-//         length: 240
-//     },
-//     {
-//         option: "Full day",
-//         length: 480
-//     }
-// ]
+const hireOptions = [
+    {
+        option: "1 hour",
+        length: 60
+    },
+    {
+        option: "2 hours",
+        length: 120
+    },
+    {
+        option: "1/2 day",
+        length: 240
+    },
+    {
+        option: "Full day",
+        length: 480
+    }
+]
 
-// await HireOption.deleteMany()
-// console.log('Deleted Hire Options')
-// await HireOption.insertMany(hireOptions)
-// console.log('Added hireOptions')
+await HireOption.deleteMany()
+console.log('Deleted Hire Options')
+await HireOption.insertMany(hireOptions)
+console.log('Added Hire Options')
 
 // const equipment = [
 //     {

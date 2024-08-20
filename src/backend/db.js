@@ -21,5 +21,10 @@ const User  = new mongoose.model('User', {
     isAdmin: { type: Boolean, required: true, default: false}
 })
 
+const HireOption  = new mongoose.model('HireOption', {
+    option: { type: String, required: true },
+    length: { type: Number, required: true }
+})
 
-export { User }
+
+export { User, HireOption } 

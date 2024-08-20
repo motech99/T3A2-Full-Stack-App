@@ -1,18 +1,8 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import { User } from './db.js'
+import { User, HireOption} from './db.js'
 
-
-const hireOptions = [
-    {
-        option: "1 hour",
-        length: 60
-    },
-    {
-        option: "2 hours",
-        length: 120
-    }]
 
 
 const app = express()
@@ -36,7 +26,8 @@ app.post('/users', async (req, res) => {
     }
 })
 
-app.get('/hireOptions', (req, res) => res.send(hireOptions)) 
+// Get all Hire Options
+app.get('/hireOptions', async (req, res) => res.send(await HireOption.find())) 
 // Routers
 
 export default app
