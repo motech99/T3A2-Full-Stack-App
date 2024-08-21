@@ -10,9 +10,24 @@
 
 .heading-font {
    font-family: 'JMH SS', sans-serif;
-  color: rgb(0, 140, 255);
+  color: #ff8800;
   font-size: 2rem;
 }
+
+.navbar-burger:hover {
+    background-color: #ff880038;
+  }
+
+.navbar-burger span,
+ .navbar-burger:hover span {
+    background-color: #ff8800;
+  }
+
+  .navbar-burger.is-active:hover span {
+    background-color: #ff8800;
+  }
+
+
 
 
 

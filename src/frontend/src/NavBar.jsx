@@ -61,10 +61,10 @@ const Navbar = () => {
         <div className='navbar-end'>
           <div className='navbar-item'>
             <div className='buttons'>
-              <a className='button is-info' onClick={closeMenu}>
-                <strong className=''>Sign up</strong>
+              <a className='button is-warning' onClick={closeMenu}>
+                <strong>Sign up</strong>
               </a>
-              <a className='button is-light' onClick={closeMenu}>
+              <a className='button is-dark' onClick={closeMenu}>
                 Log in
               </a>
             </div>
