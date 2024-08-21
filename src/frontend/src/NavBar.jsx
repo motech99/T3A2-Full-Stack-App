@@ -13,12 +13,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className='navbar' role='navigation' aria-label='main navigation'>
+    <nav
+      className='navbar'
+      role='navigation'
+      aria-label='main navigation'>
       <div className='navbar-brand'>
-        <a className='navbar-item' href='/'>
-          <h1 className='title'>GC Activity Rentals</h1>
-        </a>
-
+        <Link className='navbar-item' to='/'>
+          <h1 className='heading-font'>GC Activity Rentals</h1>
+        </Link>
         <a
           role='button'
           className={`navbar-burger ${isActive ? 'is-active' : ''}`}
@@ -32,18 +34,26 @@ const Navbar = () => {
           <span aria-hidden='true'></span>
         </a>
       </div>
-
       <div
         id='navbarBasicExample'
         className={`navbar-menu ${isActive ? 'is-active' : ''}`}>
         <div className='navbar-start'>
-          <Link to='/equipment' className='navbar-item' onClick={closeMenu}>
+          <Link
+            to='/equipment'
+            className='navbar-item custom-font'
+            onClick={closeMenu}>
             Equipment
           </Link>
-          <Link to='/prices' className='navbar-item' onClick={closeMenu}>
+          <Link
+            to='/prices'
+            className='navbar-item custom-font'
+            onClick={closeMenu}>
             Prices
           </Link>
-          <Link to='/bookings' className='navbar-item' onClick={closeMenu}>
+          <Link
+            to='/bookings'
+            className='navbar-item custom-font'
+            onClick={closeMenu}>
             Manage Booking
           </Link>
         </div>
@@ -52,7 +62,7 @@ const Navbar = () => {
           <div className='navbar-item'>
             <div className='buttons'>
               <a className='button is-info' onClick={closeMenu}>
-                <strong>Sign up</strong>
+                <strong className=''>Sign up</strong>
               </a>
               <a className='button is-light' onClick={closeMenu}>
                 Log in
