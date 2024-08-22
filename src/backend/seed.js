@@ -8,14 +8,14 @@ const users = [
         firstName: "John",
         lastName: "Doe",
         email: "john@example.com",
-        password: "password123",
+        password: await bcrypt.hash("password123",10),
         isAdmin: true
     },
     {
         firstName: "Jane",
         lastName: "Smith",
         email: "jane@example.com",
-        password: "secret123",
+        password: await bcrypt.hash("secret123", 10),
         isAdmin: false
     }
 ]
