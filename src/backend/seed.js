@@ -72,7 +72,7 @@ const equipment = [
                 price: 80
             }
         ],
-        image: "bike.jpg"
+        image: "https://res.cloudinary.com/dnezlrvew/image/upload/v1724299944/bike_vdzirl.jpg"
     },
     {
         item: "Stand Up Paddle Board",
@@ -95,7 +95,7 @@ const equipment = [
                 price: 60
             }
         ],
-        image: "sup.jpg"
+        image: "https://res.cloudinary.com/dnezlrvew/image/upload/v1724299945/SUP_j3kzly.jpg"
     },
     {
         item: "Surfboard",
@@ -118,7 +118,7 @@ const equipment = [
                 price: 70
             }
         ],
-        image: "surfboard.jpg"
+        image: "https://res.cloudinary.com/dnezlrvew/image/upload/v1724300130/surfboardb_lwy9zu.jpg"
     },
     {
         item: "Kayak",
@@ -141,7 +141,7 @@ const equipment = [
                 price: 80
             }
         ],
-        image: "kayak.jpg"
+        image: "https://res.cloudinary.com/dnezlrvew/image/upload/v1724299944/kayak_im46dw.jpg"
     },
 ]
 
