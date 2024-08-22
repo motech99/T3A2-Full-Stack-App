@@ -154,16 +154,16 @@ const bookings = [
     {
         user: userList[0],
         equipment: items[0],
-        date: new Date(),
-        time: new Date(),
+        startTime: new Date(),
+        endTime: new Date(),
         hireOption: options[0],
         quantity: 2
     },
     {
         user: userList[1],
         equipment: items[1],
-        date: new Date(),
-        time: new Date(),
+        startTime: new Date(),
+        endTime: new Date(),
         hireOption: options[1],
         quantity: 1
     }
