@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { Equipment } from '../db.js'
+import { verifyAdmin, verifyUser } from "../auth.js"
 
 const router = Router()
 
@@ -22,8 +23,7 @@ router.get('/equipment/:id', async (req, res) => {
 })
 
 // Update Equipment
-// TODO: Make Admin Only 
-router.put('/equipment/:id', async (req, res) => {
+router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
     try {
         const equipment = await Equipment.findByIdAndUpdate(req.params.id, req.body, { new: true })
         if (equipment) {
@@ -38,8 +38,7 @@ router.put('/equipment/:id', async (req, res) => {
 
 
 // Add New Equipment
-// TODO: Make Admin Only
-router.post('/equipment', async (req, res) => {
+router.post('/equipment', verifyUser, verifyAdmin, async (req, res) => {
     try {
         const newEquipment = await Equipment.create(req.body)
         res.status(201).send(newEquipment)

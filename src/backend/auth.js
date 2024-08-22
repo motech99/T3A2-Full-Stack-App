@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { User } from './db'
+import { User } from './db.js'
 
 // Verify User is logged in
 const verifyUser = (req, res, next) => {
@@ -28,4 +28,13 @@ const verifyAdmin = async (req, res, next) => {
 };
 
 
-export { verifyUser, verifyAdmin }
+// Verify Owner or Admin
+const verifyOwnerOrAdmin = async (req, res, next) => {
+    const user = await User.findById(req.user.userId);
+    if (!user ||!(user.isAdmin || user._id.toString() === req.params.id)) {
+        return res.status(403).send({ error: 'Access denied. You must be an admin or the owner of this resource.' });
+    }
+    next();
+};
+
+export { verifyUser, verifyAdmin, verifyOwnerOrAdmin };

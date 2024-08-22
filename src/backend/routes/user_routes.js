@@ -1,12 +1,13 @@
-import { Router } from 'express'
-import { User } from '../db.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { Router } from 'express'
+import { User } from '../db.js'
+import { verifyAdmin, verifyUser } from "../auth.js"
 
 const router = Router()
 
 // Get Users
-router.get('/users', async (req, res) => res.send(await User.find()))
+router.get('/users', verifyUser, verifyAdmin, async (req, res) => res.send(await User.find()))
 
 // Create a new User
 
