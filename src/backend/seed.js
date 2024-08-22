@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 import {User, HireOption, Equipment, Booking} from "./db.js"
 
 
@@ -18,7 +19,6 @@ const users = [
         isAdmin: false
     }
 ]
-
 
 await User.deleteMany()
 console.log('Deleted Users')
