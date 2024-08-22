@@ -1,0 +1,43 @@
+.wrapper {
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-img {
+  width: 90vw;
+  max-width: 600px;
+  display: block;
+  margin-bottom: 20px; 
+}
+
+.error-font {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.error-font-sub {
+    font-size: 1.5rem;
+}
+
+.error-font-p {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.error-font-p:visited,
+.error-font-p:link,
+.error-font-p:active {
+  color: rgb(255, 149, 0);
+}
+
+.error-font-p:hover {
+  color: rgb(255, 196, 3);
+}
