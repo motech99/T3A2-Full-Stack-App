@@ -7,13 +7,15 @@ export const Footer = () => {
         <div className='container'>
           <div className='columns is-vcentered is-mobile'>
             {/* Left: Copyright Info */}
-            <div className='column has-text-left custom-padding-left is-full-mobile has-text-centered-mobile'>
-              <p className='text-colour'>&copy; 2024 GC Activity Rentals</p>
+            <div className='column has-text-left is-full-mobile has-text-centered-mobile'>
+              <p className='footer-heading'>&copy; 2024 GC Activity Rentals</p>
             </div>
 
             {/* Middle: Get In Touch */}
             <div className='column has-text-centered is-full-mobile'>
-              <h1 className='text-colour'>Get In Touch</h1>
+              <h1>
+                <strong className='footer-heading'>Get In Touch</strong>
+              </h1>
             </div>
 
             {/* Right: Icons */}
