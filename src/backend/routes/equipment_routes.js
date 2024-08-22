@@ -38,16 +38,6 @@ router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
 })
 
 
-// Add New Equipment
-// router.post('/equipment', verifyUser, verifyAdmin, async (req, res) => {
-//     try {
-//         const newEquipment = await Equipment.create(req.body)
-//         res.status(201).send(newEquipment)
-//     } catch (err) {
-//         res.status(400).send({ error: err.message })
-//     }
-// })
-
 router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async (req, res) => {
     try {
         const { item, quantity, rates } = req.body;
