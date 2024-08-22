@@ -1,6 +1,7 @@
-
 export const Equipment = () => {
   return (
-    <div>Equipment</div>
-  )
-}
+    <>
+      <h1 className='title headings'>Equipment</h1>
+    </>
+  );
+};

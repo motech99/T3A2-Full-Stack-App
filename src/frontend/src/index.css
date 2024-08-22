@@ -1,35 +1,60 @@
-@import "https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css";
+@import 'https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css';
 @import url('https://fonts.cdnfonts.com/css/jmh-ss');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 * {
-    font-family: 'Quicksand', sans-serif;  
-    font-weight: 600;
-    font-size: 1.2rem;
-  }
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.headings {
+  font-family: 'JMH SS', sans-serif;
+  text-align: center;
+  margin-top: 2rem;
+}
 
 .heading-font {
-   font-family: 'JMH SS', sans-serif;
+  font-family: 'JMH SS', sans-serif;
   color: #ff8800;
   font-size: 2rem;
 }
 
 .navbar-burger:hover {
-    background-color: #ff880038;
-  }
+  background-color: #ff880038;
+}
 
 .navbar-burger span,
- .navbar-burger:hover span {
-    background-color: #ff8800;
+.navbar-burger:hover span {
+  background-color: #ff8800;
+}
+
+.navbar-burger.is-active:hover span {
+  background-color: #ff8800;
+}
+
+.text-colour {
+  color: #ff8800;
+}
+
+/* This is so that the footer sticks to the bottom */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+.footer {
+  background-color: #272727;
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+
+/* Media Query for Footer  */
+@media (max-width: 768px) {
+  .footer .columns {
+    flex-direction: column;
+    text-align: center;
   }
-
-  .navbar-burger.is-active:hover span {
-    background-color: #ff8800;
+  .footer .columns .column {
+    padding: 5px 0;
   }
-
-
-
-
-
-
-
+}

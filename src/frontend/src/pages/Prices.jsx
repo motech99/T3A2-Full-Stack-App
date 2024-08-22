@@ -1,5 +1,7 @@
 export const Prices = () => {
   return (
-    <div>Prices</div>
-  )
+    <>
+      <h1 className='title headings'>Prices</h1>
+    </>
+  );
 }
