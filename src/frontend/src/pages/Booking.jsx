@@ -1,5 +1,7 @@
 export const Booking = () => {
   return (
-    <div>Manage Booking</div>
-  )
+    <>
+      <h1 className='title headings'>Bookings</h1>
+    </>
+  );
 }
