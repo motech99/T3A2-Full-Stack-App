@@ -57,8 +57,8 @@ const Equipment  = new mongoose.model('Equipment', equipmentSchema)
 const bookingSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: User, required: true },
     equipment: { type: mongoose.Schema.Types.ObjectId, ref: Equipment, required: true },
-    date: { type: Date, required: true },
-    time: { type: Date, required: true },
+    startTime: { type: Date, required: true },
+    endTime: { type: Date, required: true },
     hireOption: { type: mongoose.Schema.Types.ObjectId, ref: HireOption, required: true},
     quantity: { type: Number, required: true }
 })
