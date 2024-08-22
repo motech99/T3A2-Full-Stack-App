@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { Equipment } from '../db.js'
 import { verifyAdmin, verifyUser } from "../auth.js"
+import { upload } from "../cloudinary.js"
 
 const router = Router()
 
@@ -38,13 +39,42 @@ router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
 
 
 // Add New Equipment
-router.post('/equipment', verifyUser, verifyAdmin, async (req, res) => {
+// router.post('/equipment', verifyUser, verifyAdmin, async (req, res) => {
+//     try {
+//         const newEquipment = await Equipment.create(req.body)
+//         res.status(201).send(newEquipment)
+//     } catch (err) {
+//         res.status(400).send({ error: err.message })
+//     }
+// })
+
+router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async (req, res) => {
     try {
-        const newEquipment = await Equipment.create(req.body)
-        res.status(201).send(newEquipment)
+        const { item, quantity, rates } = req.body;
+
+        // Check if image is provided via URL or file upload
+        let imageUrl;
+        if (req.file) {
+            imageUrl = req.file.path;  // If uploaded through Multer
+        } else if (req.body.imageUrl) {
+            imageUrl = req.body.imageUrl;  // If provided as a URL string
+        } else {
+            return res.status(400).send({ error: 'Image is required.' });
+        }
+
+        const newEquipment = new Equipment({
+            item,
+            quantity,
+            rates,
+            image: imageUrl
+        });
+
+        await newEquipment.save();
+        res.status(201).send(newEquipment);
     } catch (err) {
-        res.status(400).send({ error: err.message })
+        res.status(400).send({ error: err.message });
     }
-})
+});
+
 
 export default router
