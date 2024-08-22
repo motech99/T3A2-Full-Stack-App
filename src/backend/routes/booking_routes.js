@@ -25,14 +25,38 @@ router.get('/bookings/:id', verifyUser, async (req, res) => {
        if (!booking) {
         return res.status(404).send({ error: 'Booking not found' });
         }
-        if (booking.user.toString() === currentUser || isAdmin) {
-        return res.send(booking);
-        }  else {
-        return res.status(403).send({ error: 'Access denied. You do not have permission to view this booking.' });
+      
+       
+        // Verify user ownership or admin status
+        if (booking.user.toString() !== currentUser && !isAdmin) {
+            return res.status(403).send({ error: 'Access denied. You do not have permission to view this booking.' });
         }
+
+        // Filter rates to only include the one matching the hireOption in the booking
+        let totalPrice = 0;
+        if (booking.equipment && booking.hireOption) {
+            const matchingRate = booking.equipment.rates.find(rate => 
+                rate.hireOption.toString() === booking.hireOption._id.toString()
+            );
+
+            if (matchingRate) {
+                totalPrice = matchingRate.price * booking.quantity;
+            }
+
+            // Return only the matching rate
+            booking.equipment.rates = [matchingRate];
+        }
+
+        // Include the total price in the response
+        const response = {
+            ...booking.toObject(),
+            totalPrice
+        };
+
+        return res.send(response);
       
     } catch (err) {
-        res.status(400).send({ error: err.message })
+        res.status(400).send({ error: err.message });
     }
 })
 
