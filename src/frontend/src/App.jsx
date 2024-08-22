@@ -17,8 +17,8 @@ function App() {
 
   return (
     <div className='is-flex is-flex-direction-column min-vh-100'>
-      <NavBar />
-      <Home />
+     <NavBar />
+       {location.pathname === '/' && <Home />}
       <div className='is-flex-grow-1'>
         <Routes>
           <Route path='/equipment' element={<Equipment />} />
