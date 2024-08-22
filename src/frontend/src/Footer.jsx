@@ -1,4 +1,5 @@
 
+
 export const Footer = () => {
   return (
     <>
@@ -17,7 +18,10 @@ export const Footer = () => {
 
             {/* Right: Icons */}
             <div className='column has-text-right is-full-mobile has-text-centered-mobile'>
-              {/* Icons can be added here later */}
+              {/* Icons */}
+              <a href='https://github.com/motech99/T3A2-Full-Stack-App'>
+                <i class='fa-brands fa-github fa-xl'></i>
+              </a>
             </div>
           </div>
         </div>
