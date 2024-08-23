@@ -2,6 +2,7 @@ import request from "supertest"
 import app from "../app.js"
 
 
+
 describe('Equipment Routes', () => {
 
     describe("GET/ equipment", () => {
@@ -61,5 +62,5 @@ describe('Equipment Routes', () => {
             expect(res.body).toEqual(expect.objectContaining({item: "Bike"}))
         })
     })
-
+    
 })
