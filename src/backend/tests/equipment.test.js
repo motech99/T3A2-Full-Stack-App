@@ -151,5 +151,75 @@ describe('Equipment Routes', () => {
             expect(res.body.error).toBeTruthy(); // Ensure an error message is present
         });
     });
+    describe("POST /equipment", () => {
+        let adminToken;
+        let hireOptionId;
     
+        beforeAll(async () => {
+            // Login as admin to get the token
+            const adminLogin = await request(app).post('/login').send({ email: "john@example.com", password: "password123" });
+            adminToken = adminLogin.body.token;
+    
+            // Retrieve a hire option for use in tests
+            const hireOption = await request(app).get('/hireOptions')
+                .set('Authorization', `Bearer ${adminToken}`)
+            hireOptionId = hireOption.body[0]._id;
+        });
+        afterAll(async() => {
+            // Delete new equipment after tests
+            await Equipment.deleteMany({item: "Scooter"});
+        })
+    
+        test("successful creation of new equipment object by admin", async () => {
+            const res = await request(app)
+                .post('/equipment')
+                .set('Authorization', `Bearer ${adminToken}`)
+                .send({
+                    item: "Scooter",
+                    quantity: 10,
+                    rates: [{ hireOption: hireOptionId, price: 20 }],
+                    imageUrl: "https://res.cloudinary.com/dnezlrvew/image/upload/v1724300532/scooter_p62a9l.jpg"
+                });
+    
+            expect(res.status).toBe(201);
+            expect(res.body.item).toBe("Scooter");
+            expect(res.body.quantity).toBe(10);
+            expect(res.body.rates).toHaveLength(1);
+            expect(res.body.image).toBeDefined(); 
+        });
+    
+        test("400 error occurs if no image is provided", async () => {
+            const res = await request(app)
+                .post('/equipment')
+                .set('Authorization', `Bearer ${adminToken}`)
+                .send({
+                    item: "Scooter",
+                    quantity: 10,
+                    rates: [{ hireOption: hireOptionId, price: 20 }],
+                    imageUrl: null
+                });
+    
+            expect(res.status).toBe(400);
+            expect(res.body.error).toBe('Image is required.');
+        })
+    
+        test ("403 error if a non-admin user tries to create equipment", async () => {
+            const userLogin = await request(app).post('/login').send({ email: "jane@example.com", password: "secret123" });
+            const userToken = userLogin.body.token;
+    
+            const res = await request(app)
+                .post('/equipment')
+                .set('Authorization', `Bearer ${userToken}`)
+                .send({
+                    item: "Scooter",
+                    quantity: 10,
+                    rates: [{ hireOption: hireOptionId, price: 20 }],
+                    imageUrl: null
+                });
+    
+            expect(res.status).toBe(403);
+            expect(res.body.error).toBe('Access denied. You must be an admin.');
+        });
+    });
+
 })
