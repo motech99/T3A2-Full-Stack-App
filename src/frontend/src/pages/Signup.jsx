@@ -1,7 +1,8 @@
+
 export const Signup = () => {
   return (
     <>
-      <h1 className='title headings'>signup</h1>
+    <h1>Hello</h1>
     </>
   );
-}
+};

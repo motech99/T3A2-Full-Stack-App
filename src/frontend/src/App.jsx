@@ -9,10 +9,11 @@ import { Footer } from './Footer';
 import { Home } from './Home';
 import { Error } from './pages/Error';
 
+
 function App() {
   const location = useLocation();
 
-  const footerPaths = ['/', '/signup', '/login'];
+  const footerPaths = ['/', '/login'];
 
   return (
     <div className='is-flex is-flex-direction-column min-vh-100'>
