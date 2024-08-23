@@ -38,7 +38,7 @@ const HireOption  = new mongoose.model('HireOption', hireOptionSchema)
 // Equipment Schema
 const equipmentSchema = new mongoose.Schema({
     item: { type: String, required: true },
-    quantity: { type: Number, required: true },
+    quantity: { type: Number, required: true, min: 1 },
     rates: [
         {
             hireOption: {type: mongoose.Schema.Types.ObjectId, ref: HireOption, required: true},
