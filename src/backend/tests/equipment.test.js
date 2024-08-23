@@ -2,7 +2,6 @@ import request from "supertest"
 import app from "../app.js"
 
 
-
 describe('Equipment Routes', () => {
 
     describe("GET/ equipment", () => {

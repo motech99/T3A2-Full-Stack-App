@@ -38,7 +38,7 @@ router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
 })
 
 
-
+// Add new Equipment
 router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async (req, res) => {
     try {
         const { item, quantity, rates } = req.body;
