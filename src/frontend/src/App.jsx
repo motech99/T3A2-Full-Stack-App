@@ -13,7 +13,7 @@ import { Error } from './pages/Error';
 function App() {
   const location = useLocation();
 
-  const footerPaths = ['/', '/login'];
+  const footerPaths = ['/', '/signup', '/login'];
 
   return (
     <div className='is-flex is-flex-direction-column min-vh-100'>
