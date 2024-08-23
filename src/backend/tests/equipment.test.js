@@ -139,19 +139,17 @@ describe('Equipment Routes', () => {
             expect(res.body.error).toBe("Equipment not found");
         });
     
-        // test("Invalid update data results in 400 error", async () => {
-        //     const updateData = { item: "", quantity: -10 }; // Invalid data
+        test("Invalid update data results in 400 error", async () => {
+            const updateData = { item: "", quantity: -10 }; // Invalid data
     
-        //     const res = await request(app)
-        //         .put(`/equipment/${equipmentId}`)
-        //         .set('Authorization', `Bearer ${adminToken}`)
-        //         .send(updateData);
+            const res = await request(app)
+                .put(`/equipment/${equipmentId}`)
+                .set('Authorization', `Bearer ${adminToken}`)
+                .send(updateData);
     
-        //     expect(res.status).toBe(400);
-        //     expect(res.body.error).toBeTruthy(); // Ensure an error message is present
-        // });
+            expect(res.status).toBe(400);
+            expect(res.body.error).toBeTruthy(); // Ensure an error message is present
+        });
     });
-    
-    
     
 })

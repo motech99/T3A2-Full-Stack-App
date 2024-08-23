@@ -27,7 +27,7 @@ router.get('/equipment/:id', async (req, res) => {
 router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
     try {
         const isAdmin = req.user.isAdmin
-        const equipment = await Equipment.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        const equipment = await Equipment.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
         if (!equipment) {
             return res.status(404).send({ error: 'Equipment not found' })
             
