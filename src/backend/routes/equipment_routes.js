@@ -38,15 +38,6 @@ router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
 })
 
 
-// Add New Equipment
-// router.post('/equipment', verifyUser, verifyAdmin, async (req, res) => {
-//     try {
-//         const newEquipment = await Equipment.create(req.body)
-//         res.status(201).send(newEquipment)
-//     } catch (err) {
-//         res.status(400).send({ error: err.message })
-//     }
-// })
 
 router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async (req, res) => {
     try {
@@ -74,7 +65,25 @@ router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async
     } catch (err) {
         res.status(400).send({ error: err.message });
     }
-});
+})
+
+// Delete Equipment
+router.delete('/equipment/:id', verifyUser, async (req, res) => {
+    try {
+        const isAdmin = req.user.isAdmin
+        const equipment = await Equipment.findById(req.params.id)
+        if (!equipment) {
+            res.status(404).send({ error: 'Equipment not found' })
+            
+        } if (isAdmin) {
+            await Booking.findByIdAndDelete(req.params.id)
+            res.sendStatus(200)
+        }else { res.status(403).send({ error: 'Access denied. You do not have permission to delete this booking.' })
+        }
+    } catch (err) {
+        res.status(400).send({ error: err.message })
+    }
+})
 
 
 export default router

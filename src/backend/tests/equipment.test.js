@@ -62,26 +62,4 @@ describe('Equipment Routes', () => {
         })
     })
 
-    // describe("PUT /equipment/:id", () => {
-    //     let equipmentId
-    //     let updatedItem
-    //     let adminToken
-    //     let userToken
-    //     let res
-    //     beforeAll(async () => {
-    //         const equipment = await request(app).get('/equipment')
-    //         equipmentId = equipment.body[0]._id
-    //         updatedItem = "Updated Bike"
-    //         const admin = 
-    //         res = await request(app).put(`/equipment/${equipmentId}`)
-    //            .send({ item: updatedItem })
-    //            .set('Authorization', `Bearer ${adminToken}`)
-    //     })
-
-    //     test("PUT /equipment/:id successfully updates the equipment item ", async () => {
-    //         expect(res.status).toBe(200)
-    //         expect(res.body.item).toBe(updatedItem)
-    //     })
-    // })
-    
 })
