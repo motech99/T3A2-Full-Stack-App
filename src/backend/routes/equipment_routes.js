@@ -46,14 +46,16 @@ router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
 // Add new Equipment
 router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async (req, res) => {
     try {
-        const { item, quantity, rates } = req.body;
+        const { item, quantity, rates, imageUrl } = req.body;
 
         // Check if image is provided via URL or file upload
-        let imageUrl;
+        let imageUrlToSave;
         if (req.file) {
-            imageUrl = req.file.path;  // If uploaded through Multer
-        } else if (req.body.imageUrl) {
-            imageUrl = req.body.imageUrl;  // If provided as a URL string
+            // Upload the image to Cloudinary
+            const result = await cloudinary.uploader.upload(req.file.path);
+            imageUrlToSave = result.secure_url; // Get the URL of the uploaded image
+        } else if (imageUrl) {
+            imageUrlToSave = imageUrl; // Use the provided image URL
         } else {
             return res.status(400).send({ error: 'Image is required.' });
         }
@@ -62,7 +64,7 @@ router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async
             item,
             quantity,
             rates,
-            image: imageUrl
+            image: imageUrlToSave
         });
 
         await newEquipment.save();
@@ -70,7 +72,7 @@ router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async
     } catch (err) {
         res.status(400).send({ error: err.message });
     }
-})
+});
 
 // Delete Equipment
 router.delete('/equipment/:id', verifyUser, async (req, res) => {

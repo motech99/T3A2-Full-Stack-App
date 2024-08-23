@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
     cloudinary,
     params: {
         folder: 'GC-Rentals',
-        allowedFormats: ['jpg', 'png', 'gif'],
+        allowedFormats: ['jpg', 'png', 'gif', 'webp'],
         transformation: [{ width: 500, height: 500, crop: 'limit' }]
     }
 })
