@@ -8,6 +8,7 @@ import { verifyAdmin, verifyUser, verifyOwnerOrAdmin } from "../auth.js"
 const router = Router();
 
 // Get all Bookings
+// TODO: Remove this and relevant tests as route below handles get all bookings when logged in as admin
 router.get('/bookings', verifyUser, verifyAdmin, async (req, res) => res.send(await Booking.find()
 .populate({path:"user", select: "firstName lastName"})
 .populate({path:"equipment", select: "item"})
@@ -22,6 +23,7 @@ router.get('/bookings/manage', verifyUser, async (req, res) => {
 
         // Find all bookings for the current user, or all bookings if the user is an admin
         const bookings = await Booking.find(isAdmin ? {} : { user: currentUser })
+            .populate({path:"user", select: "firstName lastName"})
             .populate({ path: "hireOption", select: "option" })
             .populate({ path: "equipment", select: "item rates.hireOption rates.price" });
 
