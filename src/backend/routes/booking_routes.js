@@ -3,12 +3,12 @@ import { Router } from "express";
 import { Booking } from '../db.js'
 import { HireOption } from "../db.js"
 import { Equipment } from "../db.js";
-import { verifyAdmin, verifyUser, verifyOwnerOrAdmin } from "../auth.js"
+import { verifyUser} from "../auth.js"
 
 const router = Router();
 
-// Get all bookings made by logged in user
-router.get('/bookings/manage', verifyUser, async (req, res) => {
+// Get all bookings made by logged in user (if admin retrieves all bookings)
+router.get('/bookings', verifyUser, async (req, res) => {
     try {
         const currentUser = req.user.userId;
         const isAdmin = req.user.isAdmin;
