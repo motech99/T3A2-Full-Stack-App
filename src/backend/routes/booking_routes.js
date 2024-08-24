@@ -13,52 +13,51 @@ router.get('/bookings', verifyUser, verifyAdmin, async (req, res) => res.send(aw
 .populate({path:"hireOption", select: "option"})));
 
 
-// Get single booking
-router.get('/bookings/:id', verifyUser, async (req, res) => {
+// Get all bookings made by logged in user
+// Get all bookings for the logged-in user
+router.get('/bookings/manage', verifyUser, async (req, res) => {
     try {
-        const currentUser = req.user.userId
-        const isAdmin = req.user.isAdmin
-        const booking = await Booking.findById(req.params.id)
-       .populate({path:"hireOption", select: "option"})
-       .populate({path:"equipment", select: "item rates.hireOption rates.price"})
+        const currentUser = req.user.userId;
+        const isAdmin = req.user.isAdmin;
 
-       if (!booking) {
-        return res.status(404).send({ error: 'Booking not found' });
-        }
-      
-       
-        // Verify user ownership or admin status
-        if (booking.user.toString() !== currentUser && !isAdmin) {
-            return res.status(403).send({ error: 'Access denied. You do not have permission to view this booking.' });
+        // Find all bookings for the current user, or all bookings if the user is an admin
+        const bookings = await Booking.find(isAdmin ? {} : { user: currentUser })
+            .populate({ path: "hireOption", select: "option" })
+            .populate({ path: "equipment", select: "item rates.hireOption rates.price" });
+
+        if (!bookings || bookings.length === 0) {
+            return res.status(404).send({ error: 'No bookings found' });
         }
 
-        // Filter rates to only include the one matching the hireOption in the booking
-        let totalPrice = 0;
-        if (booking.equipment && booking.hireOption) {
-            const matchingRate = booking.equipment.rates.find(rate => 
-                rate.hireOption.toString() === booking.hireOption._id.toString()
-            );
+        // Calculate total prices for each booking
+        const bookingsWithTotalPrice = bookings.map(booking => {
+            let totalPrice = 0;
+            if (booking.equipment && booking.hireOption) {
+                const matchingRate = booking.equipment.rates.find(rate => 
+                    rate.hireOption.toString() === booking.hireOption._id.toString()
+                );
 
-            if (matchingRate) {
-                totalPrice = matchingRate.price * booking.quantity;
+                if (matchingRate) {
+                    totalPrice = matchingRate.price * booking.quantity;
+                }
+
+                // Return only the matching rate
+                booking.equipment.rates = [matchingRate];
             }
 
-            // Return only the matching rate
-            booking.equipment.rates = [matchingRate];
-        }
+            return {
+                ...booking.toObject(),
+                totalPrice
+            };
+        });
 
-        // Include the total price in the response
-        const response = {
-            ...booking.toObject(),
-            totalPrice
-        };
+        return res.send(bookingsWithTotalPrice);
 
-        return res.send(response);
-      
     } catch (err) {
         res.status(400).send({ error: err.message });
     }
-})
+});
+
 
 
 // Update Booking
