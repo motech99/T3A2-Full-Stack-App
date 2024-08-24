@@ -58,6 +58,73 @@ router.get('/bookings/manage', verifyUser, async (req, res) => {
     }
 });
 
+// Create a new Booking
+router.post('/bookings', verifyUser, async (req, res) => {
+    try {
+        const { equipment, quantity, startTime, hireOption } = req.body;
+
+        // Validate input fields
+        if (!equipment || !quantity || !startTime || !hireOption) {
+            return res.status(400).send({ error: 'Equipment ID, quantity, start time, and hire option ID are required.' });
+        }
+
+        // Parse startTime and check for validity
+        const start = new Date(startTime);
+        if (isNaN(start.getTime())) {
+            return res.status(400).send({ error: 'Invalid start time format.' });
+        }
+
+        // Fetch HireOption to get the hire length
+        const hireOptionDoc = await HireOption.findById(hireOption);
+        if (!hireOptionDoc) {
+            return res.status(404).send({ error: 'Hire Option not found.' });
+        }
+
+        // Calculate endTime
+        const end = new Date(start);
+        end.setMinutes(end.getMinutes() + hireOptionDoc.length);
+
+        if (start >= end) {
+            return res.status(400).send({ error: 'End time must be after start time.' });
+        }
+
+        // Retrieve equipment
+        const equipmentSelected = await Equipment.findById(equipment);
+        if (!equipmentSelected) {
+            return res.status(404).send({ error: 'Equipment not found.' });
+        }
+
+        // Check current availability
+        const conflictingBookings = await Booking.find({
+            equipment: equipment,
+            $or: [
+                { $and: [{ startTime: { $lt: end } }, { endTime: { $gt: start } }] }
+            ]
+        });
+
+        const bookedQuantity = conflictingBookings.reduce((total, booking) => total + booking.quantity, 0);
+        const availableQuantity = equipmentSelected.quantity - bookedQuantity;
+
+        if (quantity > availableQuantity) {
+            return res.status(400).send({ error: 'Requested quantity exceeds available quantity.' });
+        }
+
+        // Create the booking
+        const newBooking = new Booking({
+            user: req.user.userId,
+            equipment: equipment,
+            startTime: start,
+            endTime: end,
+            quantity,
+            hireOption: hireOption
+        });
+
+        await newBooking.save();
+        res.status(201).send(newBooking);
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
+});
 
 
 // Update Booking
@@ -156,89 +223,35 @@ router.put('/bookings/:id', verifyUser, async (req, res) => {
 // Delete Booking
 router.delete('/bookings/:id', verifyUser, async (req, res) => {
     try {
-        const currentUser = req.user.userId
-        const isAdmin = req.user.isAdmin
-        const booking = await Booking.findById(req.params.id)
+        const currentUser = req.user.userId;
+        const isAdmin = req.user.isAdmin;
+
+        // Fetch the booking
+        const booking = await Booking.findById(req.params.id);
         if (!booking) {
-            res.status(404).send({ error: 'Booking not found' })
-            
-        } if (booking.user.toString() === currentUser || isAdmin) {
-            await Booking.findByIdAndDelete(req.params.id)
-            res.sendStatus(200)
-        }else { res.status(403).send({ error: 'Access denied. You do not have permission to delete this booking.' })
+            return res.status(404).send({ error: 'Booking not found' });
         }
+
+        // Check if the booking time has already passed
+        const now = new Date();
+        if (booking.endTime <= now) {
+            return res.status(400).send({ error: 'Cannot delete a booking that has already ended.' });
+        }
+
+        // Check user permissions
+        if (booking.user.toString() !== currentUser && !isAdmin) {
+            return res.status(403).send({ error: 'Access denied. You do not have permission to delete this booking.' });
+        }
+
+        // Proceed with deletion
+        await Booking.findByIdAndDelete(req.params.id);
+        res.sendStatus(200);
+        
     } catch (err) {
-        res.status(400).send({ error: err.message })
-    }
-})
-
-// Create a new Booking
-router.post('/bookings', verifyUser, async (req, res) => {
-    try {
-        const { equipment, quantity, startTime, hireOption } = req.body;
-
-        // Validate input fields
-        if (!equipment || !quantity || !startTime || !hireOption) {
-            return res.status(400).send({ error: 'Equipment ID, quantity, start time, and hire option ID are required.' });
-        }
-
-        // Parse startTime and check for validity
-        const start = new Date(startTime);
-        if (isNaN(start.getTime())) {
-            return res.status(400).send({ error: 'Invalid start time format.' });
-        }
-
-        // Fetch HireOption to get the hire length
-        const hireOptionDoc = await HireOption.findById(hireOption);
-        if (!hireOptionDoc) {
-            return res.status(404).send({ error: 'Hire Option not found.' });
-        }
-
-        // Calculate endTime
-        const end = new Date(start);
-        end.setMinutes(end.getMinutes() + hireOptionDoc.length);
-
-        if (start >= end) {
-            return res.status(400).send({ error: 'End time must be after start time.' });
-        }
-
-        // Retrieve equipment
-        const equipmentSelected = await Equipment.findById(equipment);
-        if (!equipmentSelected) {
-            return res.status(404).send({ error: 'Equipment not found.' });
-        }
-
-        // Check current availability
-        const conflictingBookings = await Booking.find({
-            equipment: equipment,
-            $or: [
-                { $and: [{ startTime: { $lt: end } }, { endTime: { $gt: start } }] }
-            ]
-        });
-
-        const bookedQuantity = conflictingBookings.reduce((total, booking) => total + booking.quantity, 0);
-        const availableQuantity = equipmentSelected.quantity - bookedQuantity;
-
-        if (quantity > availableQuantity) {
-            return res.status(400).send({ error: 'Requested quantity exceeds available quantity.' });
-        }
-
-        // Create the booking
-        const newBooking = new Booking({
-            user: req.user.userId,
-            equipment: equipment,
-            startTime: start,
-            endTime: end,
-            quantity,
-            hireOption: hireOption
-        });
-
-        await newBooking.save();
-        res.status(201).send(newBooking);
-    } catch (err) {
-        res.status(500).send({ error: err.message });
+        res.status(400).send({ error: err.message });
     }
 });
+
 
 
 export default router
