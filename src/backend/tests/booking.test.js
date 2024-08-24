@@ -9,6 +9,7 @@ describe("POST /bookings", () => {
     let equipmentId;
     let hireOptionId;
     let userId;
+    let postBookingId;
 
     beforeAll(async () => {
         // Login as admin to get token
@@ -28,7 +29,7 @@ describe("POST /bookings", () => {
         userId = user._id;
 
         // Create a booking
-        await request(app)
+        const bookingResponse = await request(app)
             .post('/bookings')
             .set('Authorization', `Bearer ${userToken}`)
             .send({
@@ -37,10 +38,12 @@ describe("POST /bookings", () => {
                 startTime: new Date(),
                 hireOption: hireOptionId
             });
+
+        postBookingId = bookingResponse.body._id
     });
     afterAll(async () => {
-        // Cleanup: Delete created bookings
-        await Booking.deleteMany({ user: userId });
+        // Cleanup: Delete created booking
+        await Booking.findByIdAndDelete(postBookingId);
     });
 
     test("should create a new booking", async () => {
@@ -92,7 +95,7 @@ describe("POST /bookings", () => {
 describe('PUT /bookings/:id', () => {
     let adminToken;
     let userToken;
-    let bookingId;
+    let putBookingId;
     let equipmentId;
     let hireOptionId;
     let anotherUser
@@ -120,14 +123,20 @@ describe('PUT /bookings/:id', () => {
             hireOption: hireOptionId
         }).set('Authorization', `Bearer ${userToken}`);
 
-        bookingId = booking.body._id;
+        putBookingId = booking.body._id;
+    });
+    afterAll(async () => {
+        // Cleanup: Delete the created booking
+        await request(app).delete(`/bookings/${putBookingId}`).set('Authorization', `Bearer ${userToken}`)
+        // Delete the created user
+        await request(app).delete(`/users/${anotherUser._id}`)
     });
 
     test('Successfully updates a booking by admin', async () => {
         const updateData = { quantity: 10 };
 
         const res = await request(app)
-            .put(`/bookings/${bookingId}`)
+            .put(`/bookings/${putBookingId}`)
             .set('Authorization', `Bearer ${adminToken}`)
             .send(updateData);
 
@@ -139,7 +148,7 @@ describe('PUT /bookings/:id', () => {
         const updateData = { quantity: 7 };
 
         const res = await request(app)
-            .put(`/bookings/${bookingId}`)
+            .put(`/bookings/${putBookingId}`)
             .set('Authorization', `Bearer ${userToken}`)
             .send(updateData);
 
@@ -161,7 +170,7 @@ describe('PUT /bookings/:id', () => {
         const updateData = { quantity: 15 };
 
         const res = await request(app)
-            .put(`/bookings/${bookingId}`)
+            .put(`/bookings/${putBookingId}`)
             .set('Authorization', `Bearer ${anotherUserToken}`)
             .send(updateData);
 
@@ -169,11 +178,37 @@ describe('PUT /bookings/:id', () => {
         expect(res.body.error).toBe('Access denied. You do not have permission to update this booking.');
     });
 
-    afterAll(async () => {
-        // Cleanup: Delete the created booking
-        await request(app).delete(`/bookings/${bookingId}`).set('Authorization', `Bearer ${userToken}`)
-        // Delete the created user
-        await request(app).delete(`/users/${anotherUser._id}`)
-    });
 });
+
+describe('GET /bookings', () => {
+    let adminToken;
+    let userToken;
+    let userLogin;
+
+    beforeAll(async () => {
+        // Login as admin and user to get tokens
+        const adminLogin = await request(app).post('/login').send({ email: 'john@example.com', password: 'password123' });
+        adminToken = adminLogin.body.token;
+
+        userLogin = await request(app).post('/login').send({ email: 'jane@example.com', password: 'secret123' });
+        userToken = userLogin.body.token;
+
+    })
+    test('Returns all bookings for admin', async () => {
+        const res = await request(app)
+           .get('/bookings')
+           .set('Authorization', `Bearer ${adminToken}`);
+
+        expect(res.status).toBe(200);
+        expect(Array.isArray(res.body)).toBeTruthy();
+    })
+    test('Returns all bookings for the user who created them', async () => {
+        const res = await request(app)
+           .get('/bookings')
+           .set('Authorization', `Bearer ${userToken}`);
+
+        expect(res.status).toBe(200);
+        expect(res.body[0].user.firstName).toBe(userLogin.body.firstName);
+    })
+})
 
