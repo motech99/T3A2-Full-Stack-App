@@ -8,6 +8,6 @@ describe('App Test', () => {
         expect(res.status).toBe(200)
         expect(res.headers['content-type']).toContain('json')
         expect(res.body).toBeDefined()
-        expect(res.body.info).toBe('GC Activity Rentals')
+        expect(res.body.info).toBe('GC Activity Rentals!')
     })
 })
