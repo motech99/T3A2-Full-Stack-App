@@ -9,7 +9,6 @@ import { Footer } from './Footer';
 import { Home } from './Home';
 import { Error } from './pages/Error';
 
-
 function App() {
   const location = useLocation();
 
