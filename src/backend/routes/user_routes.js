@@ -14,11 +14,19 @@ router.get('/users', verifyUser, verifyAdmin, async (req, res) => res.send(await
 router.post('/users', async (req, res) => {
     try {
         const { email, password, ...userData } = req.body; 
+
         // Check email is in correct format
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             return res.status(400).send({ error: 'Invalid email format.' });
         }
+
+        // Check if the email is already registered
+        const existingUser = await User.findOne({ email: email.toLowerCase() });
+        if (existingUser) {
+            return res.status(409).send({ error: 'Email is already registered.' });
+        }
+        
         // Hash Password for storing
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
