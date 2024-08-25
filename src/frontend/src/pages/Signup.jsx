@@ -111,7 +111,7 @@ export const Signup = () => {
                     Sign Up
                   </button>
                   <p className='padding-login has-text-centered login-heading'>
-                    already have an account?
+                    Already have an account?
                     <Link className='login-heading login-link' to='/login'>
                       Login
                     </Link>
