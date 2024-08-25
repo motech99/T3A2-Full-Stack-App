@@ -32,7 +32,7 @@ export const Login = () => {
                       Login
                     </button>
                     <p className='padding-login has-text-centered login-heading'>
-                      don't have an account?
+                      Don't have an account?
                       <Link className='login-heading login-link' to='/signup'>  Signup
                       </Link>
                     </p>
