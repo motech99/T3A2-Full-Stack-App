@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import './Equipment.css';
 
-const EQUIPMENT_URL = 'https://t3a2-full-stack-app-api.onrender.com/equipment';
+export const EQUIPMENT_URL = 'https://t3a2-full-stack-app-api.onrender.com/equipment';
 
 export const Equipment = () => {
   const { data, isLoading, error } = useQuery({
@@ -15,7 +15,7 @@ export const Equipment = () => {
 return (
   <div className='equipment-container'>
     <h1 className='title headings'>Equipment</h1>
-    <div className='columns is-multiline is-centered hello'>
+    <div className='columns is-multiline is-centered'>
       {data?.map((equipment) => (
         <div
           key={equipment._id}
