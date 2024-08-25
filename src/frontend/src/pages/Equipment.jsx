@@ -14,7 +14,7 @@ export const Equipment = () => {
 
 return (
   <div className='equipment-container'>
-    <h1 className='title headings'>Equipment</h1>
+    <h1 className='title headings mb-6'>Equipment</h1>
     <div className='columns is-multiline is-centered'>
       {data?.map((equipment) => (
         <div
