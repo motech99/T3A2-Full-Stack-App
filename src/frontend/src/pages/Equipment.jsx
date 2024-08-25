@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import './Equipment.css'; // Import the custom CSS
+import './Equipment.css';
 
 const EQUIPMENT_URL = 'https://t3a2-full-stack-app-api.onrender.com/equipment';
 
@@ -9,7 +9,7 @@ export const Equipment = () => {
     queryFn: () => fetch(EQUIPMENT_URL).then((res) => res.json()),
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <h1 className='title headings'>Loading...</h1>;
   if (error) return <p>Error: {error.message}</p>;
 
 return (

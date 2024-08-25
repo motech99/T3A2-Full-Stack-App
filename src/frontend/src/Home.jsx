@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export const Home = () => {
   return (
     <>
@@ -10,7 +12,9 @@ export const Home = () => {
           </h2>
           <div className='button-sizing-home'>
             <button className='button is-warning is-outlined'>
+            <Link className=' font' to='/equipment'>
               Our Equipment &raquo;
+            </Link>
             </button>
           </div>
           <div className='button-sizing-home'>
