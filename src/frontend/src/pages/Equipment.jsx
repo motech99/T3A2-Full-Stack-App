@@ -19,7 +19,7 @@ return (
       {data?.map((equipment) => (
         <div
           key={equipment._id}
-          className='column is-5-desktop is-4-tablet is-12-mobile equipment-sizing'>
+          className='column is-5-desktop is-6-tablet is-12-mobile equipment-sizing'>
           <div className='card equipment-card'>
             <div className='card-image'>
               <figure className='image is-1by1'>
