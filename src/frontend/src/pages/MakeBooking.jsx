@@ -192,8 +192,8 @@ export const MakeBooking = () => {
   };
 
   // Display loading or error message while fetching data
-  if (isLoading) return <h1>Loading...</h1>;
-  if (isError) return <h1>Error loading data.</h1>;
+  if (isLoading) return <h1 className='title headings'>Loading...</h1>;
+  if (isError) return <h1 className='title headings'>Error loading data.</h1>;
 
   return (
     <section className='background-equipment'>
@@ -267,7 +267,7 @@ export const MakeBooking = () => {
               <div className='field'>
                 <label className='label'>Total Price</label>
                 <div className='control'>
-                  <p className='input'>{totalPrice.toFixed(2)}</p>
+                  <p className='input'>{'$' + totalPrice.toFixed(2)}</p>
                 </div>
               </div>
               <div className='field'>

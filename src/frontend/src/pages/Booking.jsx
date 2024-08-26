@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import './styles/Booking.css'
 
 const fetchUserBookings = async () => {
   const response = await fetch(
@@ -44,18 +45,59 @@ export const Booking = () => {
   }
 
   return (
-    <div>
-      <h1 className='title headings'>Bookings</h1>
-      {bookings.map((booking) => (
-        <div key={booking._id} className='booking-item'>
-          <h2>{booking.equipment.item}</h2>
-          <p>Start Time: {new Date(booking.startTime).toLocaleString()}</p>
-          <p>End Time: {new Date(booking.endTime).toLocaleString()}</p>
-          <p>Hire Option: {booking.hireOption?.option || 'N/A'}</p>{' '}
-          <p>Quantity: {booking.quantity}</p>
-          <p>Total Price: ${booking.totalPrice.toFixed(2)}</p>
+    <section className='background-booking'>
+      <div className='equipment-container'>
+        <h1 className='title headings has-text-centered mb-6'>
+          MANAGE BOOKINGS
+        </h1>
+        <div className='columns is-multiline is-centered'>
+          {bookings.map((booking) => (
+            <div
+              key={booking._id}
+              className='column is-5-desktop is-8-tablet is-12-mobile equipment-sizing'>
+              <div className='card equipment-card'>
+                <div className='card-content'>
+                  <div className='media'>
+                    <div className='media-content'>
+                      <h2 className='title is-4 has-text-centered login-heading login-border'>
+                        {booking.equipment.item.toUpperCase()}
+                      </h2>
+                      <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
+                        <tbody>
+                          <tr>
+                            <th>Start Time</th>
+                            <td>
+                              {new Date(booking.startTime).toLocaleString()}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>End Time</th>
+                            <td>
+                              {new Date(booking.endTime).toLocaleString()}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>Hire Option</th>
+                            <td>{booking.hireOption?.option || 'N/A'}</td>
+                          </tr>
+                          <tr>
+                            <th>Quantity</th>
+                            <td>{booking.quantity}</td>
+                          </tr>
+                          <tr>
+                            <th>Total Price</th>
+                            <td>${booking.totalPrice.toFixed(2)}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
+    </section>
   );
 };
