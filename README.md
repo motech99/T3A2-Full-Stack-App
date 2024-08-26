@@ -37,14 +37,22 @@ The admin of this application will be able to view all of the bookings that have
 
 The application will be targeted at members of the general public looking for an activity on the Gold Coast. The web application is strategically designed to cater to a diverse audience with varying needs and preferences. It is accessible and user friendly for individuals of all backgrounds and abilities. Whether the user is a local Gold Coast resident, or an international visitor, the web application ensures an intuitive navigation to ensure seamless access equipment hire.
 
-#### Tech Stack
+#### Tech Stack and Libraries
 
-- JavaScript
-- Node.js
-- Express.js
-- MongoDB
-- React
-- Cloudinary
+
+- **JavaScript**: A versatile, high-level programming language used primarily for creating interactive web applications. It runs in browsers and on the server-side with Node.js, enabling dynamic content, event handling, and more.
+- **Node.js**: A JavaScript runtime built on Chrome's V8 engine, enabling you to run JavaScript on the server side. It's designed for building scalable network applications and is known for its non-blocking, event-driven architecture.
+- **Express.js**: A minimal and flexible Node.js web application framework that provides a robust set of features to build web and mobile applications. It simplifies the process of building APIs by handling routing, middleware, and HTTP requests.
+- **MongoDB**: A NoSQL database that stores data in flexible, JSON-like documents. It allows for dynamic schema design, which means fields can vary between documents, making it ideal for applications that require scalability and flexibility.
+- **React**: A popular JavaScript library for building user interfaces, particularly single-page applications. It allows developers to create reusable UI components and efficiently update and render components based on data changes.
+- **Cloudinary**: A cloud-based image and video management service. It allows you to upload, store, manage, and deliver media files, as well as perform on-the-fly transformations like resizing, cropping, and optimizing images.
+- **Multer**: A middleware for handling multipart/form-data, which is primarily used for uploading files in Node.js applications. It's commonly used with Express.js to manage file uploads from forms.
+- **Bcrypt**: A library for hashing passwords in a secure way. It uses a hashing algorithm that is computationally expensive, making it more difficult for attackers to crack passwords using brute force.
+- **Cors**: A middleware that enables Cross-Origin Resource Sharing (CORS) in Express.js applications. It allows your server to specify who can access resources from a different domain, helping to prevent security issues related to cross-origin requests.
+- **Dotenv**: A module that loads environment variables from a .env file into process.env in Node.js. It helps manage sensitive configuration data, like API keys and database credentials, outside of the codebase.
+- **Jsonwebtoken**: A library for generating and verifying JSON Web Tokens (JWTs). JWTs are commonly used for securely transmitting information between parties as a JSON object and are often used for authentication and authorization in web applications.
+- **Mongoose**: An Object Data Modeling (ODM) library for MongoDB and Node.js. It provides a schema-based solution to model your application data, including built-in typecasting, validation, query building, and business logic hooks.
+- **Bulma**: A modern CSS framework based on Flexbox. It provides a simple and responsive grid system along with a variety of pre-styled components like buttons, forms, and navigation bars, making it easier to design clean and responsive web interfaces.
 
 ## Dataflow Diagrams
 
