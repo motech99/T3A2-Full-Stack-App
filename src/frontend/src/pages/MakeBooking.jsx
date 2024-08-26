@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { EQUIPMENT_URL } from './Equipment.jsx';
 import FormRow from './components/FormRow';
+import './styles/MakeBooking.css'
+
 
 const MAKEBOOKING_URL = 'https://t3a2-full-stack-app-api.onrender.com/bookings';
 
@@ -35,6 +37,18 @@ const postBooking = async (bookingData) => {
 };
 
 export const MakeBooking = () => {
+  // Function to get the current date and time in the format required for the datetime-local input
+  const getCurrentDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
   // State variables for form data, total price, max quantity, and error message
   const [formData, setFormData] = useState({
     equipment: '',
@@ -178,82 +192,97 @@ export const MakeBooking = () => {
   };
 
   // Display loading or error message while fetching data
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading data.</p>;
+  if (isLoading) return <h1>Loading...</h1>;
+  if (isError) return <h1>Error loading data.</h1>;
 
   return (
-    <div>
-      <h1 className='title headings'>Make a Booking</h1>
-      <form onSubmit={handleSubmit}>
-        <FormRow
-          type='select'
-          name='equipment'
-          labelText='Equipment'
-          value={formData.equipment}
-          handleChange={handleInputChange}
-          options={
-            <>
-              <option value='' disabled>
-                Select equipment
-              </option>
-              {equipmentOptions.map((equipment) => (
-                <option key={equipment._id} value={equipment._id}>
-                  {equipment.item}
-                </option>
-              ))}
-            </>
-          }
-        />
-        <FormRow
-          type='datetime-local'
-          name='startTime'
-          labelText='Start Time'
-          value={formData.startTime}
-          handleChange={handleInputChange}
-        />
-        <FormRow
-          type='select'
-          name='hireOption'
-          labelText='Hire Option'
-          value={formData.hireOption}
-          handleChange={handleInputChange}
-          options={
-            <>
-              <option value='' disabled>
-                Select hire option
-              </option>
-              {getHireOptions(formData.equipment).map((option) => (
-                <option
-                  key={option.hireOption._id}
-                  value={option.hireOption._id}>
-                  {option.hireOption.option}
-                </option>
-              ))}
-            </>
-          }
-        />
-        <FormRow
-          type='number'
-          name='quantity'
-          labelText='Quantity'
-          value={formData.quantity}
-          handleChange={handleInputChange}
-          min={1}
-          max={maxQuantity} // Set max quantity based on available stock
-        />
-        <div className='field'>
-          <label className='label'>Total Price</label>
-          <div className='control'>
-            <p className='input'>{totalPrice.toFixed(2)}</p>
+    <section className='background-equipment'>
+      <div className='columns is-mobile is-centered is-vcentered'>
+        <div className='column is-full-mobile is-half-tablet is-one-third-desktop'>
+          <div className='box'>
+            <h1 className='title has-text-centered login-heading login-border'>
+              BOOKING
+            </h1>
+            {errorMessage && (
+              <div className='notification is-danger'>{errorMessage}</div>
+            )}
+            <form onSubmit={handleSubmit}>
+              <FormRow
+                type='select'
+                name='equipment'
+                labelText='Equipment'
+                value={formData.equipment}
+                handleChange={handleInputChange}
+                options={
+                  <>
+                    <option value='' disabled>
+                      Select equipment
+                    </option>
+                    {equipmentOptions.map((equipment) => (
+                      <option key={equipment._id} value={equipment._id}>
+                        {equipment.item}
+                      </option>
+                    ))}
+                  </>
+                }
+              />
+              <FormRow
+                type='datetime-local'
+                name='startTime'
+                labelText='Start Time'
+                value={formData.startTime}
+                handleChange={handleInputChange}
+                min={getCurrentDateTime()} // Prevent selecting a past date and time
+              />
+              <FormRow
+                type='select'
+                name='hireOption'
+                labelText='Hire Option'
+                value={formData.hireOption}
+                handleChange={handleInputChange}
+                options={
+                  <>
+                    <option value='' disabled>
+                      Select hire option
+                    </option>
+                    {getHireOptions(formData.equipment).map((option) => (
+                      <option
+                        key={option.hireOption._id}
+                        value={option.hireOption._id}>
+                        {option.hireOption.option}
+                      </option>
+                    ))}
+                  </>
+                }
+              />
+              <FormRow
+                type='number'
+                name='quantity'
+                labelText='Quantity'
+                value={formData.quantity}
+                handleChange={handleInputChange}
+                min={1}
+                max={maxQuantity} // Set max quantity based on available stock
+              />
+              <div className='field'>
+                <label className='label'>Total Price</label>
+                <div className='control'>
+                  <p className='input'>{totalPrice.toFixed(2)}</p>
+                </div>
+              </div>
+              <div className='field'>
+                <div className='control'>
+                  <button
+                    type='submit'
+                    className='button is-warning is-fullwidth'>
+                    Book Now
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
-        {errorMessage && (
-          <div className='notification is-danger'>{errorMessage}</div>
-        )}
-        <button type='submit' className='button is-warning'>
-          Book Now
-        </button>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 };

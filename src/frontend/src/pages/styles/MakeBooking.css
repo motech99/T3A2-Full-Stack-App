@@ -1,0 +1,28 @@
+.background-equipment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/GC-login.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  filter: brightness(60%);
+  z-index: -1;
+}
+
+.background-equipment {
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.padding-login {
+  padding-top: 1rem;
+}
+
+.button-login {
+  font-size: 2rem;
+  font-weight: 700;
+}

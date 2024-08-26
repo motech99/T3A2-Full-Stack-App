@@ -6,6 +6,8 @@ const FormRow = ({
   value,
   handleChange,
   options,
+  min,
+  max,
 }) => {
   if (type === 'select') {
     return (
@@ -14,7 +16,7 @@ const FormRow = ({
           {labelText || name}
         </label>
         <div className='control'>
-          <div className='select'>
+          <div className='select is-fullwidth'>
             <select
               id={name}
               name={name}
@@ -44,6 +46,8 @@ const FormRow = ({
           value={value}
           onChange={handleChange}
           required
+          min={min}
+          max={max}
         />
       </div>
     </div>
