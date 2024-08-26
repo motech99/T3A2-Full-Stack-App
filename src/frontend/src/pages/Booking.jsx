@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import './styles/Booking.css'
 
 const fetchUserBookings = async () => {
   const response = await fetch(
