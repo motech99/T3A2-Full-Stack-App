@@ -19,7 +19,9 @@ export const Home = () => {
           </div>
           <div className='button-sizing-home'>
             <button className='button is-warning is-outlined'>
+              <Link className=' font' to='/prices'>
               Our Prices &raquo;
+              </Link>
             </button>
           </div>
           <div className='button-sizing-home'>
