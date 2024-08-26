@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { Equipment } from '../db.js'
 import { verifyAdmin, verifyUser } from "../auth.js"
-import { upload } from "../cloudinary.js"
+import { cloudinary, upload } from "../cloudinary.js"
 
 const router = Router()
 
