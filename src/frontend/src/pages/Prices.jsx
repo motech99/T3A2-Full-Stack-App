@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { EQUIPMENT_URL } from './Equipment.jsx';
-import './Prices.css';
+import './styles/Prices.css';
 
 export const Prices = () => {
   const { data, isLoading, error } = useQuery({

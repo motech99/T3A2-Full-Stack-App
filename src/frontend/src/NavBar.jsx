@@ -11,7 +11,7 @@ const Navbar = () => {
     const token = localStorage.getItem('authToken');
     const name = localStorage.getItem('firstName');
     setIsLoggedIn(!!token);
-    setFirstName(name || ''); 
+    setFirstName(name || '');
   }, []);
 
   const handleBurgerClick = () => {
@@ -71,6 +71,12 @@ const Navbar = () => {
             className='navbar-item custom-font'
             onClick={closeMenu}>
             Manage Booking
+          </Link>
+          <Link
+            to='/make-booking '
+            className='navbar-item custom-font'
+            onClick={closeMenu}>
+            Make Booking
           </Link>
         </div>
 

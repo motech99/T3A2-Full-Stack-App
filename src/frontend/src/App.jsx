@@ -8,6 +8,7 @@ import { Login } from './pages/Login';
 import { Footer } from './Footer';
 import { Home } from './Home';
 import { Error } from './pages/Error';
+import { MakeBooking } from './pages/MakeBooking';
 
 function App() {
   const location = useLocation();
@@ -15,13 +16,14 @@ function App() {
   const footerPaths = ['/', '/signup', '/login'];
 
   return (
-    <div className='is-flex is-flex-direction-column min-vh-100'>
+    <div>
       <NavBar />
-      <div className='is-flex-grow-1'>
+      <div>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/equipment' element={<Equipment />} />
           <Route path='/bookings' element={<Booking />} />
+          <Route path='/make-booking' element={<MakeBooking />} />
           <Route path='/prices' element={<Prices />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import './Equipment.css';
+import './styles/Equipment.css';
 
 export const EQUIPMENT_URL = 'https://t3a2-full-stack-app-api.onrender.com/equipment';
 

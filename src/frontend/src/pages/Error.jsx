@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import './Error.css'
+import './styles/Error.css'
 
 
 import img from '../assets/not-found.svg'

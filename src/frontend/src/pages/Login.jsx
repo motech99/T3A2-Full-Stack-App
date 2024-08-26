@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login-Signup.css';
+import './styles/Login-Signup.css';
 import FormRow from './components/FormRow';
 
 export const Login = () => {
