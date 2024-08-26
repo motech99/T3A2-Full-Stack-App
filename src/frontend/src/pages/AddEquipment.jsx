@@ -1,41 +1,92 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export const AddEquipment = () => {
   const [item, setItem] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [rates, setRates] = useState([{ hireOption: '', price: '' }]);
-  const [image, setImage] = useState('');
+  const [rates, setRates] = useState([]); // Initialize as empty
+  const [hireOptions, setHireOptions] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+
   const navigate = useNavigate();
 
-  const handleAddRate = () => {
-    setRates([...rates, { hireOption: '', price: '' }]);
-  };
+  useEffect(() => {
+    const fetchHireOptions = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        const response = await fetch('https://t3a2-full-stack-app-api.onrender.com/hireOptions', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
-  const handleRateChange = (index, field, value) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch hire options');
+        }
+
+        const data = await response.json();
+        setHireOptions(data);
+        // Initialize rates with hire options
+        setRates(data.map(option => ({ hireOption: option._id, price: '' })));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchHireOptions();
+  }, []);
+
+  const handleRateChange = (index, value) => {
     const updatedRates = rates.map((rate, i) =>
-      i === index ? { ...rate, [field]: value } : rate
+      i === index ? { ...rate, price: value } : rate
     );
     setRates(updatedRates);
+  };
+
+  const handleImageFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImageFile(file);
+    }
+  };
+
+  const handleImageUrlChange = (event) => {
+    setImageUrl(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch('/equipment', { // Adjust URL based on your API setup
+      const token = localStorage.getItem('authToken');
+      const formData = new FormData();
+      formData.append('item', item);
+      formData.append('quantity', quantity);
+      formData.append('rates', JSON.stringify(rates));
+      if (imageFile) {
+        formData.append('image', imageFile);
+      }
+      if (imageUrl) {
+        formData.append('imageUrl', imageUrl);
+      }
+
+      const response = await fetch('https://t3a2-full-stack-app-api.onrender.com/equipment', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ item, quantity, rates, image }),
+        body: formData,
       });
+
       if (response.ok) {
-        navigate('/equipment/admin'); // Redirect to EquipmentAdmin page
+        navigate('/equipment/admin');
       } else {
-        throw new Error('Failed to add equipment');
+        const errorText = await response.text();
+        console.error('Server response:', errorText);
+        throw new Error(`Failed to add equipment: ${errorText}`);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error submitting equipment:', error);
     }
   };
 
@@ -63,46 +114,52 @@ export const AddEquipment = () => {
             required
           />
         </div>
-        {rates.map((rate, index) => (
-          <div key={index} className='field'>
-            <label className='label'>Rate {index + 1}</label>
-            <div className='field'>
-              <label className='label'>Hire Option</label>
-              <input
-                className='input'
-                type='text'
-                value={rate.hireOption}
-                onChange={(e) => handleRateChange(index, 'hireOption', e.target.value)}
-                required
-              />
-            </div>
-            <div className='field'>
-              <label className='label'>Price</label>
-              <input
-                className='input'
-                type='number'
-                value={rate.price}
-                onChange={(e) => handleRateChange(index, 'price', e.target.value)}
-                required
-              />
-            </div>
-          </div>
-        ))}
-        <button
-          type='button'
-          className='button is-primary'
-          onClick={handleAddRate}
-        >
-          Add Another Rate
-        </button>
         <div className='field'>
-          <label className='label'>Image URL</label>
+          <label className='label'>Rates</label>
+          <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
+            <thead>
+              <tr>
+                <th>Hire Option</th>
+                <th>Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rates.map((rate, index) => (
+                <tr key={index}>
+                  <td>
+                    {hireOptions.find(option => option._id === rate.hireOption)?.option || 'Unknown'}
+                  </td>
+                  <td>
+                    <input
+                      className='input'
+                      type='number'
+                      value={rate.price}
+                      onChange={(e) => handleRateChange(index, e.target.value)}
+                      required
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className='field'>
+          <label className='label'>Image</label>
           <input
             className='input'
-            type='text'
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            type='file'
+            accept='image/jpeg, image/png'
+            onChange={handleImageFileChange}
           />
+          <div className='field'>
+            <label className='label'>Or Provide Image URL</label>
+            <input
+              className='input'
+              type='text'
+              value={imageUrl}
+              onChange={handleImageUrlChange}
+            />
+          </div>
         </div>
         <button type='submit' className='button is-success'>
           Add Equipment
@@ -111,3 +168,8 @@ export const AddEquipment = () => {
     </div>
   );
 };
+
+
+
+
+
