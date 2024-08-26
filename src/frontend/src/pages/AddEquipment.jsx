@@ -79,7 +79,7 @@ export const AddEquipment = () => {
       });
   
       if (response.ok) {
-        navigate('/admin-equipment');
+        navigate('/manage-equipment');
       } else {
         const error = await response.json();
         throw new Error(`Failed to add equipment: ${error.error}`);
@@ -88,88 +88,86 @@ export const AddEquipment = () => {
       console.error('Error submitting equipment:', error);
     }
   };
-  
 
   return (
     <div className='add-equipment-container'>
       <h1 className='title has-text-centered'>Add New Equipment</h1>
-      <form onSubmit={handleSubmit}>
-        <div className='field'>
-          <label className='label'>Item</label>
-          <input
-            className='input'
-            type='text'
-            value={item}
-            onChange={(e) => setItem(e.target.value)}
-            required
-          />
-        </div>
-        <div className='field'>
-          <label className='label'>Quantity</label>
-          <input
-            className='input'
-            type='number'
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            required
-          />
-        </div>
-        <div className='field'>
-          <label className='label'>Rates</label>
-          <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
-            <thead>
-              <tr>
-                <th>Hire Option</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rates.map((rate, index) => (
-                <tr key={index}>
-                  <td>
-                    {hireOptions.find(option => option._id === rate.hireOption)?.option || 'Unknown'}
-                  </td>
-                  <td>
-                    <input
-                      className='input'
-                      type='number'
-                      value={rate.price}
-                      onChange={(e) => handleRateChange(index, e.target.value)}
-                      required
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <div className='field'>
-          <label className='label'>Image</label>
-          <input
-            className='input'
-            type='file'
-            accept='image/jpeg, image/png'
-            onChange={handleImageFileChange}
-          />
+      <div className='box p-4'>
+        <form onSubmit={handleSubmit}>
           <div className='field'>
-            <label className='label'>Or Provide Image URL</label>
+            <label className='label'>Item</label>
             <input
               className='input'
               type='text'
-              value={imageUrl}
-              onChange={handleImageUrlChange}
+              value={item}
+              onChange={(e) => setItem(e.target.value)}
+              required
             />
           </div>
-        </div>
-        <button type='submit' className='button is-success'>
-          Add Equipment
-        </button>
-      </form>
+          <div className='field'>
+            <label className='label'>Quantity</label>
+            <input
+              className='input'
+              type='number'
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              required
+            />
+          </div>
+          <div className='field'>
+            <label className='label'>Rates</label>
+            <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
+              <thead>
+                <tr>
+                  <th>Hire Option</th>
+                  <th>Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rates.map((rate, index) => (
+                  <tr key={index}>
+                    <td>
+                      {hireOptions.find(option => option._id === rate.hireOption)?.option || 'Unknown'}
+                    </td>
+                    <td>
+                      <input
+                        className='input'
+                        type='number'
+                        value={rate.price}
+                        onChange={(e) => handleRateChange(index, e.target.value)}
+                        required
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className='field'>
+            <label className='label'>Image</label>
+            <input
+              className='input'
+              type='file'
+              accept='image/jpeg, image/png'
+              onChange={handleImageFileChange}
+            />
+            <div className='field'>
+              <label className='label'>Or Provide Image URL</label>
+              <input
+                className='input'
+                type='text'
+                value={imageUrl}
+                onChange={handleImageUrlChange}
+              />
+            </div>
+          </div>
+          <button type='submit' className='button is-success'>
+            Add Equipment
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
-
-
-
 
 

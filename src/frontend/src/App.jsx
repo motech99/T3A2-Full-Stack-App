@@ -9,7 +9,7 @@ import { Footer } from './Footer';
 import { Home } from './Home';
 import { Error } from './pages/Error';
 import { MakeBooking } from './pages/MakeBooking';
-import { EquipmentAdmin } from './pages/AdminEquipment';
+import { ManageEquipment } from './pages/AdminEquipment';
 import { AddEquipment } from './pages/AddEquipment';
 
 
@@ -25,7 +25,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/equipment' element={<Equipment />}/>
-          <Route path='/admin-equipment' element={<EquipmentAdmin />} />
+          <Route path='/manage-equipment' element={<ManageEquipment />} />
           <Route path='/equipment/add' element={<AddEquipment />} />
           <Route path='/bookings' element={<Booking />} />
           <Route path='/make-booking' element={<MakeBooking />} />
