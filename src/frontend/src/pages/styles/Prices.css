@@ -28,3 +28,20 @@
 .table-hoverable:hover td {
   color: orangered
 }
+
+.notification {
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 4px;
+  font-size: 1em;
+  color: #fff;
+}
+
+.notification.success {
+  background-color: #28a745; /* Green */
+}
+
+.notification.error {
+  background-color: #dc3545; /* Red */
+}
+
