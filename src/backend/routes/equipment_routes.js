@@ -46,33 +46,44 @@ router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
 // Add new Equipment
 router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async (req, res) => {
     try {
-        const { item, quantity, rates, imageUrl } = req.body;
-
-        // Check if image is provided via URL or file upload
-        let imageUrlToSave;
-        if (req.file) {
-            // Upload the image to Cloudinary
-            const result = await cloudinary.uploader.upload(req.file.path);
-            imageUrlToSave = result.secure_url; // Get the URL of the uploaded image
-        } else if (imageUrl) {
-            imageUrlToSave = imageUrl; // Use the provided image URL
-        } else {
-            return res.status(400).send({ error: 'Image is required.' });
+      const { item, quantity, rates, imageUrl } = req.body;
+  
+      // Check if image is provided via URL or file upload
+      let imageUrlToSave;
+      if (req.file) {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        imageUrlToSave = result.secure_url;
+      } else if (imageUrl) {
+        imageUrlToSave = imageUrl;
+      } else {
+        return res.status(400).send({ error: 'Image is required.' });
+      }
+  
+      // Parse rates from JSON string
+      let parsedRates;
+      try {
+        parsedRates = JSON.parse(rates);
+        if (!Array.isArray(parsedRates) || parsedRates.some(rate => !rate.hireOption || !rate.price)) {
+          return res.status(400).send({ error: 'Invalid rates format.' });
         }
-
-        const newEquipment = new Equipment({
-            item,
-            quantity,
-            rates,
-            image: imageUrlToSave
-        });
-
-        await newEquipment.save();
-        res.status(201).send(newEquipment);
+      } catch (error) {
+        return res.status(400).send({ error: 'Invalid rates format.' });
+      }
+  
+      const newEquipment = new Equipment({
+        item,
+        quantity,
+        rates: parsedRates,
+        image: imageUrlToSave
+      });
+  
+      await newEquipment.save();
+      res.status(201).send(newEquipment);
     } catch (err) {
-        res.status(400).send({ error: err.message });
+      res.status(400).send({ error: err.message });
     }
-});
+  });
+  
 
 // Delete Equipment
 router.delete('/equipment/:id', verifyUser, async (req, res) => {
