@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { EQUIPMENT_URL } from './Equipment.jsx';
-import './styles/Prices.css';
+import './styles/AdminEquipment.css';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -124,36 +124,36 @@ export const ManageEquipment = () => {
             <tbody>
               {equipmentData.map((equipment, index) => (
                 <tr key={equipment._id}>
-                  <td>{equipment.item}</td>
-                  <td>
+                  <td data-label="Item">{equipment.item}</td>
+                  <td data-label="Quantity">
                     <input
                       type='number'
                       value={equipment.quantity}
                       onChange={(e) => handleFieldChange(index, "quantity", e.target.value)}
                     />
                   </td>
-                  <td>
+                  <td data-label="1 Hour">
                     <input
                       type='number'
                       value={equipment["1 hour"]}
                       onChange={(e) => handleFieldChange(index, "1 hour", e.target.value)}
                     />
                   </td>
-                  <td>
+                  <td data-label="2 Hours">
                     <input
                       type='number'
                       value={equipment["2 hours"]}
                       onChange={(e) => handleFieldChange(index, "2 hours", e.target.value)}
                     />
                   </td>
-                  <td>
+                  <td data-label="1/2 Day">
                     <input
                       type='number'
                       value={equipment["1/2 day"]}
                       onChange={(e) => handleFieldChange(index, "1/2 day", e.target.value)}
                     />
                   </td>
-                  <td>
+                  <td data-label="Full Day">
                     <input
                       type='number'
                       value={equipment["Full day"]}
@@ -178,7 +178,4 @@ export const ManageEquipment = () => {
     </div>
   );
 };
-
-
-
 
