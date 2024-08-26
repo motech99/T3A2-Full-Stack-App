@@ -62,14 +62,14 @@ export const AddEquipment = () => {
       const formData = new FormData();
       formData.append('item', item);
       formData.append('quantity', quantity);
-      formData.append('rates', JSON.stringify(rates));
+      formData.append('rates', JSON.stringify(rates)); // Ensure rates is a JSON string
       if (imageFile) {
         formData.append('image', imageFile);
       }
       if (imageUrl) {
         formData.append('imageUrl', imageUrl);
       }
-
+  
       const response = await fetch('https://t3a2-full-stack-app-api.onrender.com/equipment', {
         method: 'POST',
         headers: {
@@ -77,18 +77,18 @@ export const AddEquipment = () => {
         },
         body: formData,
       });
-
+  
       if (response.ok) {
-        navigate('/equipment/admin');
+        navigate('/admin-equipment');
       } else {
-        const errorText = await response.text();
-        console.error('Server response:', errorText);
-        throw new Error(`Failed to add equipment: ${errorText}`);
+        const error = await response.json();
+        throw new Error(`Failed to add equipment: ${error.error}`);
       }
     } catch (error) {
       console.error('Error submitting equipment:', error);
     }
   };
+  
 
   return (
     <div className='add-equipment-container'>
