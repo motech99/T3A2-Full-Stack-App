@@ -12,14 +12,14 @@ export const Home = () => {
           </h2>
           <div className='button-sizing-home'>
             <button className='button is-warning is-outlined'>
-            <Link className=' font' to='/equipment'>
+            <Link className='font' to='/equipment'>
               Our Equipment &raquo;
             </Link>
             </button>
           </div>
           <div className='button-sizing-home'>
             <button className='button is-warning is-outlined'>
-              <Link className=' font' to='/prices'>
+              <Link className='font' to='/prices'>
               Our Prices &raquo;
               </Link>
             </button>
