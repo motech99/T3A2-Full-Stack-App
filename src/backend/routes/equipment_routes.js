@@ -113,22 +113,29 @@ router.post('/equipment', verifyUser, verifyAdmin, upload.single('image'), async
   });
   
 
-// Delete Equipment
+/// Delete Equipment
 router.delete('/equipment/:id', verifyUser, async (req, res) => {
     try {
-        const isAdmin = req.user.isAdmin
-        const equipment = await Equipment.findById(req.params.id)
+        const isAdmin = req.user.isAdmin;
+        const equipment = await Equipment.findById(req.params.id);
+
         if (!equipment) {
-            res.status(404).send({ error: 'Equipment not found' })
-            
-        } if (isAdmin) {
-            await Booking.findByIdAndDelete(req.params.id)
-            res.sendStatus(200)
-        }else { res.status(403).send({ error: 'Access denied. You do not have permission to delete this booking.' })}
+            return res.status(404).send({ error: 'Equipment not found' });
+        }
+
+        if (!isAdmin) {
+            return res.status(403).send({ error: 'Access denied. You do not have permission to delete this equipment.' });
+        }
+
+        await Equipment.findByIdAndDelete(req.params.id);
+        return res.status(200).json({ message: 'Equipment deleted successfully' });
+
     } catch (err) {
-        res.status(400).send({ error: err.message })
+        console.error('Error deleting equipment:', err.message);
+        res.status(500).send({ error: 'Internal Server Error' });
     }
-})
+});
+
 
 
 export default router
