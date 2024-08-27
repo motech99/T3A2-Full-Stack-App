@@ -19,9 +19,9 @@ function App() {
   const footerPaths = ['/', '/signup', '/login'];
 
   return (
-    <div>
+    <div className='is-flex is-flex-direction-column min-vh-100'>
       <NavBar />
-      <div>
+      <div className='is-flex-grow-1'>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/equipment' element={<Equipment />}/>

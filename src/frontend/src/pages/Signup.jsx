@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import FormRow from './components/FormRow'
+import './styles/Prices.css';
 
 export const Signup = () => {
   // State to manage form inputs

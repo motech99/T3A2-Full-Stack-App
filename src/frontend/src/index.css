@@ -83,7 +83,6 @@
 
 .button-sizing-home {
   padding: 0.7rem;
-  
 }
 
 .button-sizing-home > button {
@@ -135,4 +134,12 @@
   font-size: 1.4rem;
   font-weight: 700;
   color: #ffac11;
+}
+
+.font:hover {
+  color: #ff8000;
+}
+
+.background-equipment {
+  
 }
