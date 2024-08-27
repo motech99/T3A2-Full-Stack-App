@@ -26,21 +26,49 @@ router.get('/equipment/:id', async (req, res) => {
 // Update Equipment
 router.put('/equipment/:id', verifyUser, verifyAdmin, async (req, res) => {
     try {
-        const isAdmin = req.user.isAdmin
-        const equipment = await Equipment.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true })
+        const isAdmin = req.user.isAdmin;
+
+        // Fetch the equipment by ID
+        const equipment = await Equipment.findById(req.params.id);
         if (!equipment) {
-            return res.status(404).send({ error: 'Equipment not found' })
-            
-        } if (isAdmin) {
-            return res.send(equipment)
+            return res.status(404).send({ error: 'Equipment not found' });
         }
-        else {
-            return res.status(403).send({ error: 'Access denied. You must be an admin.' })
+
+        // Update equipment fields
+        equipment.item = req.body.item || equipment.item;
+        equipment.quantity = req.body.quantity || equipment.quantity;
+        equipment.image = req.body.image || equipment.image;
+
+        // Update rates
+        if (Array.isArray(req.body.rates)) {
+            // Iterate through the provided rates
+            req.body.rates.forEach(newRate => {
+                // Find the rate object in the existing rates array that matches the hireOption
+                const rateIndex = equipment.rates.findIndex(rate => rate.hireOption.toString() === newRate.hireOption);
+                
+                if (rateIndex !== -1) {
+                    // Update existing rate
+                    equipment.rates[rateIndex].price = newRate.price;
+                } else {
+                    // If the rate does not exist, add it
+                    equipment.rates.push(newRate);
+                }
+            });
+        }
+
+        // Save the updated equipment
+        const updatedEquipment = await equipment.save();
+
+        if (isAdmin) {
+            return res.send(updatedEquipment);
+        } else {
+            return res.status(403).send({ error: 'Access denied. You must be an admin.' });
         }
     } catch (err) {
-        return res.status(400).send({ error: err.message })
+        return res.status(400).send({ error: err.message });
     }
-})
+});
+
 
 
 // Add new Equipment
