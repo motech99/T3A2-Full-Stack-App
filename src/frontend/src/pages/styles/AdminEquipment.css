@@ -31,7 +31,7 @@
     vertical-align: middle;
     border: 1px solid #ddd;
     word-wrap: break-word;
-    text-align: left; /* Merged text alignment */
+    text-align: left; 
   }
   
   .table th {
@@ -81,7 +81,7 @@
       display: flex;
       align-items: center;
       border: none;
-      padding: 8px; /* Adjust padding for smaller screens */
+      padding: 8px; 
       position: relative;
       white-space: nowrap;
     }
@@ -89,7 +89,7 @@
     .table td::before,
     .table th::before {
       content: attr(data-label);
-      flex-basis: 30%; /* Adjust this value to give labels more width */
+      flex-basis: 30%; 
       text-align: left;
       font-weight: bold;
       padding-right: 10px;
@@ -97,25 +97,25 @@
     }
   
     .table td input {
-      flex-basis: 70%; /* Adjust this value to give inputs less width */
+      flex-basis: 70%; 
       width: 100%;
       margin-left: auto;
-      padding: 8px; /* Ensure input fields have consistent padding */
+      padding: 8px; 
     }
   
     .table td::before {
-      position: static; /* Keeps the label inline with the input */
-      text-align: left; /* Center the label text */
+      position: static; 
+      text-align: left; 
     }
 
   
     .table tr td:last-child .button {
         width: 70%;
-        padding: 8px; /* Adjust padding for buttons */
+        padding: 8px; 
       }
   
     .equipment-card {
-      overflow-x: hidden; /* Ensure no horizontal scrollbar on smaller screens */
+      overflow-x: hidden; 
     }
   }
   

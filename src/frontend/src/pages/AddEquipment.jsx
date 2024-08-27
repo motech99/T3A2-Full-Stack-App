@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './styles/AddEquipment.css';
 
 export const AddEquipment = () => {
   const [item, setItem] = useState('');
@@ -92,7 +93,7 @@ export const AddEquipment = () => {
   return (
     <div className='add-equipment-container'>
       <h1 className='title has-text-centered'>Add New Equipment</h1>
-      <div className='box p-4'>
+      <div className='box'>
         <form onSubmit={handleSubmit}>
           <div className='field'>
             <label className='label'>Item</label>
