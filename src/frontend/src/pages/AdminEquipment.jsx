@@ -32,10 +32,11 @@ export const ManageEquipment = () => {
           _id: equipment._id,
           item: equipment.item,
           quantity: equipment.quantity,
-          "1 hour": ratesMap['1 hour'] || '',
-          "2 hours": ratesMap['2 hours'] || '',
-          "1/2 day": ratesMap['1/2 day'] || '',
-          "Full day": ratesMap['Full day'] || ''
+          rates: equipment.rates.map(rate => ({
+            _id: rate._id, // Assuming the rate has an _id
+            hireOption: rate.hireOption.option,
+            price: rate.price
+          })),
         };
       });
       setEquipmentData(initializedData);
@@ -86,12 +87,23 @@ export const ManageEquipment = () => {
 
   const handleFieldChange = (index, field, value) => {
     const updatedData = [...equipmentData];
-    updatedData[index][field] = value;
+    if (field === 'quantity') {
+      updatedData[index][field] = value;
+    } else {
+      const updatedRates = updatedData[index].rates.map(rate => {
+        if (rate.hireOption === field) {
+          return { ...rate, price: value };
+        }
+        return rate;
+      });
+      updatedData[index].rates = updatedRates;
+    }
     setEquipmentData(updatedData);
   };
 
   const handleUpdate = (index) => {
     const equipmentToUpdate = equipmentData[index];
+    console.log('Updating Equipment:', equipmentToUpdate); // Debugging
     mutation.mutate(equipmentToUpdate);
   };
 
@@ -132,34 +144,15 @@ export const ManageEquipment = () => {
                       onChange={(e) => handleFieldChange(index, "quantity", e.target.value)}
                     />
                   </td>
-                  <td data-label="1 Hour">
-                    <input
-                      type='number'
-                      value={equipment["1 hour"]}
-                      onChange={(e) => handleFieldChange(index, "1 hour", e.target.value)}
-                    />
-                  </td>
-                  <td data-label="2 Hours">
-                    <input
-                      type='number'
-                      value={equipment["2 hours"]}
-                      onChange={(e) => handleFieldChange(index, "2 hours", e.target.value)}
-                    />
-                  </td>
-                  <td data-label="1/2 Day">
-                    <input
-                      type='number'
-                      value={equipment["1/2 day"]}
-                      onChange={(e) => handleFieldChange(index, "1/2 day", e.target.value)}
-                    />
-                  </td>
-                  <td data-label="Full Day">
-                    <input
-                      type='number'
-                      value={equipment["Full day"]}
-                      onChange={(e) => handleFieldChange(index, "Full day", e.target.value)}
-                    />
-                  </td>
+                  {['1 hour', '2 hours', '1/2 day', 'Full day'].map(option => (
+                    <td key={option} data-label={option}>
+                      <input
+                        type='number'
+                        value={equipment.rates.find(rate => rate.hireOption === option)?.price || ''}
+                        onChange={(e) => handleFieldChange(index, option, e.target.value)}
+                      />
+                    </td>
+                  ))}
                   <td>
                     <button
                       type='button'
@@ -178,4 +171,6 @@ export const ManageEquipment = () => {
     </div>
   );
 };
+
+
 
