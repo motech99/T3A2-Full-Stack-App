@@ -5,7 +5,7 @@ import './styles/AddEquipment.css';
 export const AddEquipment = () => {
   const [item, setItem] = useState('');
   const [quantity, setQuantity] = useState('');
-  const [rates, setRates] = useState([]); // Initialize as empty
+  const [rates, setRates] = useState([]);
   const [hireOptions, setHireOptions] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
@@ -28,7 +28,6 @@ export const AddEquipment = () => {
 
         const data = await response.json();
         setHireOptions(data);
-        // Initialize rates with hire options
         setRates(data.map(option => ({ hireOption: option._id, price: '' })));
       } catch (error) {
         console.error(error);
@@ -63,7 +62,7 @@ export const AddEquipment = () => {
       const formData = new FormData();
       formData.append('item', item);
       formData.append('quantity', quantity);
-      formData.append('rates', JSON.stringify(rates)); // Ensure rates is a JSON string
+      formData.append('rates', JSON.stringify(rates));
       if (imageFile) {
         formData.append('image', imageFile);
       }
@@ -118,30 +117,28 @@ export const AddEquipment = () => {
           <div className='field'>
             <label className='label'>Rates</label>
             <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
-              <thead>
+                <thead>
                 <tr>
-                  <th>Hire Option</th>
-                  <th>Price</th>
+                    <th>Hire Option</th>
+                    <th>Price</th>
                 </tr>
-              </thead>
-              <tbody>
-                {rates.map((rate, index) => (
-                  <tr key={index}>
+                </thead>
+                <tbody>
+                {hireOptions.map((option, index) => (
+                    <tr key={index}>
+                    <td>{option.option}</td>
                     <td>
-                      {hireOptions.find(option => option._id === rate.hireOption)?.option || 'Unknown'}
-                    </td>
-                    <td>
-                      <input
+                        <input
                         className='input'
                         type='number'
-                        value={rate.price}
+                        value={rates[index]?.price || ''}
                         onChange={(e) => handleRateChange(index, e.target.value)}
                         required
-                      />
+                        />
                     </td>
-                  </tr>
+                    </tr>
                 ))}
-              </tbody>
+                </tbody>
             </table>
           </div>
           <div className='field'>
@@ -170,5 +167,6 @@ export const AddEquipment = () => {
     </div>
   );
 };
+
 
 
