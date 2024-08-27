@@ -78,6 +78,12 @@ const Navbar = () => {
             onClick={closeMenu}>
             Make Booking
           </Link>
+          <Link
+            to='/manage-equipment '
+            className='navbar-item custom-font'
+            onClick={closeMenu}>
+            Manage Equipment(Admin)
+          </Link>
         </div>
 
         <div className='navbar-end'>

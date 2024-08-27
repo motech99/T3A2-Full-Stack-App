@@ -9,6 +9,9 @@ import { Footer } from './Footer';
 import { Home } from './Home';
 import { Error } from './pages/Error';
 import { MakeBooking } from './pages/MakeBooking';
+import { ManageEquipment } from './pages/AdminEquipment';
+import { AddEquipment } from './pages/AddEquipment';
+
 
 function App() {
   const location = useLocation();
@@ -21,7 +24,9 @@ function App() {
       <div>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/equipment' element={<Equipment />} />
+          <Route path='/equipment' element={<Equipment />}/>
+          <Route path='/manage-equipment' element={<ManageEquipment />} />
+          <Route path='/equipment/add' element={<AddEquipment />} />
           <Route path='/bookings' element={<Booking />} />
           <Route path='/make-booking' element={<MakeBooking />} />
           <Route path='/prices' element={<Prices />} />
