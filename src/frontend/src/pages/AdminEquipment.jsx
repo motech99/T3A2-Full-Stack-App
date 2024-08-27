@@ -171,89 +171,85 @@ const deleteMutation = useMutation({
     return acc;
   }, []);
 
-  return (
-    <div className='background-booking'>
-      <div className='equipment-container'>
-        <h1 className='title headings has-text-centered has-text-white mb-6'>
-          MANAGE EQUIPMENT
-        </h1>
-        <div className='columns is-multiline is-centered'>
-          {equipmentData.map((equipment, index) => (
-            <div
-              key={equipment._id}
-              className='column is-5-desktop is-8-tablet is-12-mobile equipment-sizing'>
-              <div className='card equipment-card'>
-                <div className='card-content m-2'>
-                  <div className='media'>
-                    <div className='media-content'>
-                      <h2 className='title is-4 has-text-centered login-heading login-border'>
-                        {equipment.item.toUpperCase()}
-                      </h2>
+return (
+  <div className='background-booking'>
+    <div className='equipment-container'>
+      <h1 className='title headings has-text-centered has-text-white mb-6'>
+        MANAGE EQUIPMENT
+      </h1>
+      <div className='columns is-multiline is-centered'>
+        {equipmentData.map((equipment, index) => (
+          <div
+            key={equipment._id}
+            className='column is-5-desktop is-8-tablet is-12-mobile equipment-sizing'>
+            <div className='card equipment-card'>
+              <div className='card-content m-2'>
+                <div className='media'>
+                  <div className='media-content'>
+                    <h2 className='title is-4 has-text-centered login-heading login-border'>
+                      {equipment.item.toUpperCase()}
+                    </h2>
 
-                      <div className='field'>
-                        <label className='label'>Quantity</label>
+                    <div className='field'>
+                      <label className='label'>Quantity</label>
+                      <div className='control'>
+                        <input
+                          type='number'
+                          className='input'
+                          value={equipment.quantity}
+                          onChange={(e) =>
+                            handleFieldChange(index, 'quantity', e.target.value)
+                          }
+                        />
+                      </div>
+                    </div>
+
+                    {allHireOptions.map((option) => (
+                      <div className='field' key={option.id}>
+                        <label className='label'>{option.option}</label>
                         <div className='control'>
                           <input
                             type='number'
                             className='input'
-                            value={equipment.quantity}
+                            value={equipment.rates[option.id] || ''}
                             onChange={(e) =>
                               handleFieldChange(
                                 index,
-                                'quantity',
+                                option.id,
                                 e.target.value
                               )
                             }
                           />
                         </div>
                       </div>
+                    ))}
 
-                      {allHireOptions.map((option) => (
-                        <div className='field' key={option.id}>
-                          <label className='label'>{option.option}</label>
-                          <div className='control'>
-                            <input
-                              type='number'
-                              className='input'
-                              value={equipment.rates[option.id] || ''}
-                              onChange={(e) =>
-                                handleFieldChange(
-                                  index,
-                                  option.id,
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                      ))}
-
-                      <div className='field is-grouped'>
-                        <div className='control'>
-                          <button
-                            type='button'
-                            className='button is-success'
-                            onClick={() => handleUpdate(index)}>
-                            Update
-                          </button>
-                        </div>
-                        <div className='control'>
-                          <button
-                            type='button'
-                            className='button is-danger'
-                            onClick={() => handleDelete(equipment._id)}>
-                            Delete
-                          </button>
-                        </div>
+                    <div className='columns'>
+                      <div className='column is-half'>
+                        <button
+                          type='button'
+                          className='button is-success is-fullwidth'
+                          onClick={() => handleUpdate(index)}>
+                          Update
+                        </button>
+                      </div>
+                      <div className='column is-half'>
+                        <button
+                          type='button'
+                          className='button is-danger is-fullwidth'
+                          onClick={() => handleDelete(equipment._id)}>
+                          Delete
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
-  );
+  </div>
+);
 };
