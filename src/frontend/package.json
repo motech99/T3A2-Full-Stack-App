@@ -16,8 +16,7 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1",
     "react-toastify": "^10.0.5",
-    "styled-components": "^6.1.12",
-    "proxy": "localhost:5173"
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",

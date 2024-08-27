@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
+import './styles/Booking.css'
+
 
 const fetchUserBookings = async () => {
   const response = await fetch(
@@ -46,7 +48,7 @@ export const Booking = () => {
   return (
     <section className='background-booking'>
       <div className='equipment-container'>
-        <h1 className='title headings has-text-centered mb-6'>
+        <h1 className='title headings has-text-centered has-text-white mb-6'>
           MANAGE BOOKINGS
         </h1>
         <div className='columns is-multiline is-centered'>

@@ -8,6 +8,12 @@
   font-size: 1.2rem;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0; 
+}
+
 .headings {
   font-family: 'Poppins', sans-serif;
   text-align: center;

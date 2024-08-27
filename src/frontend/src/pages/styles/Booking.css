@@ -1,0 +1,22 @@
+.background-booking {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.background-booking::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../../assets/GC-Booking.avif) no-repeat center center;
+  background-size: cover;
+  filter: brightness(60%);
+  z-index: -1;
+}
+
+.background-equipment-admin {
+  padding: 1rem;
+}

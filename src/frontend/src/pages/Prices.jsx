@@ -13,7 +13,7 @@ export const Prices = () => {
 
   return (
     <div className='equipment-container'>
-      <h1 className='title headings has-text-centered mb-6'>Prices</h1>
+      <h1 className='title headings has-text-centered mb-6'>PRICES</h1>
       <div className='columns is-multiline is-centered'>
         {data?.map((equipment) => (
           <div
