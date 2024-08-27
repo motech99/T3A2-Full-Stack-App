@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './styles/AddEquipment.css';
+import './styles/AdminEquipment.css'
 
 export const AddEquipment = () => {
   const [item, setItem] = useState('');
@@ -16,11 +16,14 @@ export const AddEquipment = () => {
     const fetchHireOptions = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch('https://t3a2-full-stack-app-api.onrender.com/hireOptions', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          'https://t3a2-full-stack-app-api.onrender.com/hireOptions',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Failed to fetch hire options');
@@ -28,7 +31,7 @@ export const AddEquipment = () => {
 
         const data = await response.json();
         setHireOptions(data);
-        setRates(data.map(option => ({ hireOption: option._id, price: '' })));
+        setRates(data.map((option) => ({ hireOption: option._id, price: '' })));
       } catch (error) {
         console.error(error);
       }
@@ -69,15 +72,18 @@ export const AddEquipment = () => {
       if (imageUrl) {
         formData.append('imageUrl', imageUrl);
       }
-  
-      const response = await fetch('https://t3a2-full-stack-app-api.onrender.com/equipment', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-        body: formData,
-      });
-  
+
+      const response = await fetch(
+        'https://t3a2-full-stack-app-api.onrender.com/equipment',
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
       if (response.ok) {
         navigate('/manage-equipment');
       } else {
@@ -90,83 +96,104 @@ export const AddEquipment = () => {
   };
 
   return (
-    <div className='add-equipment-container'>
-      <h1 className='title has-text-centered'>Add New Equipment</h1>
-      <div className='box'>
-        <form onSubmit={handleSubmit}>
-          <div className='field'>
-            <label className='label'>Item</label>
-            <input
-              className='input'
-              type='text'
-              value={item}
-              onChange={(e) => setItem(e.target.value)}
-              required
-            />
+    <section className='background-equipment-admin'>
+      <div className='columns is-mobile is-centered is-vcentered'>
+        <div className='column is-full-mobile is-two-thirds-tablet is-half-desktop'>
+          <div className='box'>
+            <h1 className='title has-text-centered login-heading login-border'>
+              ADD NEW EQUIPMENT
+            </h1>
+            <form onSubmit={handleSubmit}>
+              <div className='field'>
+                <label className='label'>Item</label>
+                <div className='control'>
+                  <input
+                    className='input'
+                    type='text'
+                    value={item}
+                    onChange={(e) => setItem(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Quantity</label>
+                <div className='control'>
+                  <input
+                    className='input'
+                    type='number'
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Rates</label>
+                <div className='table-container'>
+                  <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
+                    <thead>
+                      <tr>
+                        <th>Hire Option</th>
+                        <th>Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {hireOptions.map((option, index) => (
+                        <tr key={index}>
+                          <td>{option.option}</td>
+                          <td>
+                            <input
+                              className='input'
+                              type='number'
+                              value={rates[index]?.price || ''}
+                              onChange={(e) =>
+                                handleRateChange(index, e.target.value)
+                              }
+                              required
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Image</label>
+                <div className='control'>
+                  <input
+                    className='input'
+                    type='file'
+                    accept='image/jpeg, image/png'
+                    onChange={handleImageFileChange}
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>Or Provide Image URL</label>
+                <div className='control'>
+                  <input
+                    className='input'
+                    type='text'
+                    value={imageUrl}
+                    onChange={handleImageUrlChange}
+                  />
+                </div>
+              </div>
+              <div className='field'>
+                <div className='control'>
+                  <button
+                    type='submit'
+                    className='button is-warning is-fullwidth'>
+                    Add Equipment
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-          <div className='field'>
-            <label className='label'>Quantity</label>
-            <input
-              className='input'
-              type='number'
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              required
-            />
-          </div>
-          <div className='field'>
-            <label className='label'>Rates</label>
-            <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
-                <thead>
-                <tr>
-                    <th>Hire Option</th>
-                    <th>Price</th>
-                </tr>
-                </thead>
-                <tbody>
-                {hireOptions.map((option, index) => (
-                    <tr key={index}>
-                    <td>{option.option}</td>
-                    <td>
-                        <input
-                        className='input'
-                        type='number'
-                        value={rates[index]?.price || ''}
-                        onChange={(e) => handleRateChange(index, e.target.value)}
-                        required
-                        />
-                    </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-          </div>
-          <div className='field'>
-            <label className='label'>Image</label>
-            <input
-              className='input'
-              type='file'
-              accept='image/jpeg, image/png'
-              onChange={handleImageFileChange}
-            />
-            <div className='field'>
-              <label className='label'>Or Provide Image URL</label>
-              <input
-                className='input'
-                type='text'
-                value={imageUrl}
-                onChange={handleImageUrlChange}
-              />
-            </div>
-          </div>
-          <button type='submit' className='button is-success'>
-            Add Equipment
-          </button>
-        </form>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
-
-
-
