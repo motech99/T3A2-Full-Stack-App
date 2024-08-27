@@ -22,7 +22,7 @@ export const ManageEquipment = () => {
 
         // Populate ratesMap with existing hire options and prices
         equipment.rates.forEach(rate => {
-          ratesMap[rate.hireOption._id] = rate.price; // Use hireOption ID as the key
+          ratesMap[rate.hireOption._id] = rate.price;
         });
 
         return {
@@ -33,7 +33,7 @@ export const ManageEquipment = () => {
           hireOptions: equipment.rates.map(rate => ({
             id: rate.hireOption._id,
             option: rate.hireOption.option
-          })) // Store hire options for dynamic column names
+          }))
         };
       });
       setEquipmentData(initializedData);
@@ -84,7 +84,11 @@ export const ManageEquipment = () => {
 
   const handleFieldChange = (index, hireOptionId, value) => {
     const updatedData = [...equipmentData];
-    updatedData[index].rates[hireOptionId] = value; // Update rates object directly
+    if (hireOptionId === 'quantity') {
+      updatedData[index].quantity = value; // Special handling for quantity
+    } else {
+      updatedData[index].rates[hireOptionId] = value; // Update rates object
+    }
     setEquipmentData(updatedData);
   };
 
@@ -174,11 +178,5 @@ export const ManageEquipment = () => {
     </div>
   );
 };
-
-
-
-
-
-
 
 
