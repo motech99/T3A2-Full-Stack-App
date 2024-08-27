@@ -73,17 +73,31 @@ const Navbar = () => {
             Manage Booking
           </Link>
           <Link
-            to='/make-booking '
+            to='/make-booking'
             className='navbar-item custom-font'
             onClick={closeMenu}>
             Make Booking
           </Link>
-          <Link
-            to='/manage-equipment '
-            className='navbar-item custom-font'
-            onClick={closeMenu}>
-            Manage Equipment(Admin)
-          </Link>
+
+          {/* Admin Dropdown */}
+          <div className='navbar-item has-dropdown is-hoverable'>
+            <a className='navbar-link'>Admin</a>
+
+            <div className='navbar-dropdown'>
+              <Link
+                to='/manage-equipment'
+                className='navbar-item custom-font'
+                onClick={closeMenu}>
+                Manage Equipment
+              </Link>
+              <Link
+                to='/equipment/add'
+                className='navbar-item custom-font'
+                onClick={closeMenu}>
+                Add Equipment
+              </Link>
+            </div>
+          </div>
         </div>
 
         <div className='navbar-end'>
