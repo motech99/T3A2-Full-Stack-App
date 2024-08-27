@@ -1,7 +1,7 @@
 .background-equipment-admin {
   position: relative;
-  min-height: 100vh; 
-  overflow: hidden; 
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .background-equipment-admin::before {
@@ -17,12 +17,62 @@
   z-index: -1;
 }
 
-.background-equipment-admin{
+.background-equipment-admin {
   padding: 1rem;
 }
 
 .box {
-    margin: 1rem 0.5rem;
-
+  margin: 1rem 0.5rem;
 }
 
+.confirmation-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: none;
+}
+
+.confirmation-dialog.is-active {
+  display: flex;
+}
+
+.confirmation-content {
+  background: white;
+  border-radius: 1rem;
+  padding: 2.5rem;
+  margin: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.buttons {
+  margin-top: -1rem;
+  margin-left: 8.5rem;
+  position: absolute;
+  
+}
+
+.button {
+  margin: 0 10px;
+}
+
+.font-admin {
+  font-family: 'Poppins', sans-serif;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-container .button {
+  flex: 1;
+  margin: 0 5px;
+}

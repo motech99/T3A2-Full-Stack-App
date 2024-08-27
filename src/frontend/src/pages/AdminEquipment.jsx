@@ -6,7 +6,30 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/AdminEquipment.css';
 
+const ConfirmationDialog = ({ isVisible, onConfirm, onCancel }) => {
+  return (
+    <div className={`confirmation-dialog ${isVisible ? 'is-active' : ''}`}>
+      <div className='confirmation-content'>
+        <h1 className='title is-5 font-admin'>
+          Are you sure you want to delete this equipment?
+        </h1>
+        <div className='buttons'>
+          <button className='button is-danger' onClick={onConfirm}>
+            Delete
+          </button>
+          <button className='button is-dark' onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ManageEquipment = () => {
+  const [showDialog, setShowDialog] = useState(false);
+  const [equipmentToDelete, setEquipmentToDelete] = useState(null);
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
@@ -163,10 +186,21 @@ export const ManageEquipment = () => {
   };
 
   const handleDelete = (equipmentId) => {
-    if (window.confirm('Are you sure you want to delete this equipment?')) {
-      console.log('Attempting to delete equipment with ID:', equipmentId); // Debugging log
-      deleteMutation.mutate(equipmentId);
+    setEquipmentToDelete(equipmentId);
+    setShowDialog(true);
+  };
+
+  const confirmDelete = () => {
+    if (equipmentToDelete) {
+      deleteMutation.mutate(equipmentToDelete);
+      setShowDialog(false);
+      setEquipmentToDelete(null);
     }
+  };
+
+  const cancelDelete = () => {
+    setShowDialog(false);
+    setEquipmentToDelete(null);
   };
 
   if (isLoading) return <h1 className='title headings'>Loading...</h1>;
@@ -193,70 +227,54 @@ export const ManageEquipment = () => {
               key={equipment._id}
               className='column is-5-desktop is-8-tablet is-12-mobile equipment-sizing'>
               <div className='card equipment-card'>
-                <div className='card-content m-2'>
-                  <div className='media'>
-                    <div className='media-content'>
-                      <h2 className='title is-4 has-text-centered login-heading login-border'>
-                        {equipment.item.toUpperCase()}
-                      </h2>
+                <div className='card-content'>
+                  <h2 className='title is-4 has-text-centered login-heading login-border'>
+                    {equipment.item.toUpperCase()}
+                  </h2>
 
-                      <div className='field'>
-                        <label className='label'>Quantity</label>
-                        <div className='control'>
-                          <input
-                            type='number'
-                            className='input'
-                            value={equipment.quantity}
-                            onChange={(e) =>
-                              handleFieldChange(
-                                index,
-                                'quantity',
-                                e.target.value
-                              )
-                            }
-                          />
-                        </div>
-                      </div>
+                  <div className='field'>
+                    <label className='label'>Quantity</label>
+                    <div className='control'>
+                      <input
+                        type='number'
+                        className='input'
+                        value={equipment.quantity}
+                        onChange={(e) =>
+                          handleFieldChange(index, 'quantity', e.target.value)
+                        }
+                      />
+                    </div>
+                  </div>
 
-                      {allHireOptions.map((option) => (
-                        <div className='field' key={option.id}>
-                          <label className='label'>{option.option}</label>
-                          <div className='control'>
-                            <input
-                              type='number'
-                              className='input'
-                              value={equipment.rates[option.id] || ''}
-                              onChange={(e) =>
-                                handleFieldChange(
-                                  index,
-                                  option.id,
-                                  e.target.value
-                                )
-                              }
-                            />
-                          </div>
-                        </div>
-                      ))}
-
-                      <div className='columns'>
-                        <div className='column is-half'>
-                          <button
-                            type='button'
-                            className='button is-success is-fullwidth'
-                            onClick={() => handleUpdate(index)}>
-                            Update
-                          </button>
-                        </div>
-                        <div className='column is-half'>
-                          <button
-                            type='button'
-                            className='button is-danger is-fullwidth'
-                            onClick={() => handleDelete(equipment._id)}>
-                            Delete
-                          </button>
-                        </div>
+                  {allHireOptions.map((option) => (
+                    <div className='field' key={option.id}>
+                      <label className='label'>{option.option}</label>
+                      <div className='control'>
+                        <input
+                          type='number'
+                          className='input'
+                          value={equipment.rates[option.id] || ''}
+                          onChange={(e) =>
+                            handleFieldChange(index, option.id, e.target.value)
+                          }
+                        />
                       </div>
                     </div>
+                  ))}
+
+                  <div className='buttons-container'>
+                    <button
+                      type='button'
+                      className='button is-success is-fullwidth'
+                      onClick={() => handleUpdate(index)}>
+                      Update
+                    </button>
+                    <button
+                      type='button'
+                      className='button is-danger is-fullwidth'
+                      onClick={() => handleDelete(equipment._id)}>
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
@@ -264,7 +282,12 @@ export const ManageEquipment = () => {
           ))}
         </div>
       </div>
-      <ToastContainer position='top-center' />
+      <ConfirmationDialog
+        isVisible={showDialog}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+      />
+      <ToastContainer />
     </div>
   );
 };
