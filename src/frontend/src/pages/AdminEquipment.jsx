@@ -20,23 +20,20 @@ export const ManageEquipment = () => {
       const initializedData = data.map(equipment => {
         const ratesMap = {};
 
-        if (Array.isArray(equipment.rates)) {
-          equipment.rates.forEach(rate => {
-            if (rate.hireOption && rate.hireOption.option) {
-              ratesMap[rate.hireOption.option] = rate.price;
-            }
-          });
-        }
+        // Populate ratesMap with existing hire options and prices
+        equipment.rates.forEach(rate => {
+          ratesMap[rate.hireOption._id] = rate.price; // Use hireOption ID as the key
+        });
 
         return {
           _id: equipment._id,
           item: equipment.item,
           quantity: equipment.quantity,
-          rates: equipment.rates.map(rate => ({
-            _id: rate._id, // Assuming the rate has an _id
-            hireOption: rate.hireOption.option,
-            price: rate.price
-          })),
+          rates: ratesMap,
+          hireOptions: equipment.rates.map(rate => ({
+            id: rate.hireOption._id,
+            option: rate.hireOption.option
+          })) // Store hire options for dynamic column names
         };
       });
       setEquipmentData(initializedData);
@@ -85,30 +82,37 @@ export const ManageEquipment = () => {
     },
   });
 
-  const handleFieldChange = (index, field, value) => {
+  const handleFieldChange = (index, hireOptionId, value) => {
     const updatedData = [...equipmentData];
-    if (field === 'quantity') {
-      updatedData[index][field] = value;
-    } else {
-      const updatedRates = updatedData[index].rates.map(rate => {
-        if (rate.hireOption === field) {
-          return { ...rate, price: value };
-        }
-        return rate;
-      });
-      updatedData[index].rates = updatedRates;
-    }
+    updatedData[index].rates[hireOptionId] = value; // Update rates object directly
     setEquipmentData(updatedData);
   };
 
   const handleUpdate = (index) => {
     const equipmentToUpdate = equipmentData[index];
-    console.log('Updating Equipment:', equipmentToUpdate); // Debugging
-    mutation.mutate(equipmentToUpdate);
+    // Convert rates object to array with hireOption IDs
+    const updatedEquipment = {
+      ...equipmentToUpdate,
+      rates: Object.keys(equipmentToUpdate.rates).map(hireOptionId => ({
+        hireOption: hireOptionId,
+        price: Number(equipmentToUpdate.rates[hireOptionId])
+      }))
+    };
+    mutation.mutate(updatedEquipment);
   };
 
   if (isLoading) return <h1 className='title headings'>Loading...</h1>;
   if (error) return <p>Error: {error.message}</p>;
+
+  // Extract hire options for column headers
+  const allHireOptions = equipmentData.reduce((acc, equipment) => {
+    equipment.hireOptions.forEach(option => {
+      if (!acc.some(o => o.id === option.id)) {
+        acc.push(option);
+      }
+    });
+    return acc;
+  }, []);
 
   return (
     <div className='equipment-container'>
@@ -126,10 +130,9 @@ export const ManageEquipment = () => {
               <tr>
                 <th>Item</th>
                 <th>Quantity</th>
-                <th>1 Hour</th>
-                <th>2 Hours</th>
-                <th>1/2 Day</th>
-                <th>Full Day</th>
+                {allHireOptions.map(option => (
+                  <th key={option.id}>{option.option}</th>
+                ))}
                 <th>Actions</th>
               </tr>
             </thead>
@@ -141,15 +144,15 @@ export const ManageEquipment = () => {
                     <input
                       type='number'
                       value={equipment.quantity}
-                      onChange={(e) => handleFieldChange(index, "quantity", e.target.value)}
+                      onChange={(e) => handleFieldChange(index, 'quantity', e.target.value)}
                     />
                   </td>
-                  {['1 hour', '2 hours', '1/2 day', 'Full day'].map(option => (
-                    <td key={option} data-label={option}>
+                  {allHireOptions.map(option => (
+                    <td key={option.id} data-label={option.option}>
                       <input
                         type='number'
-                        value={equipment.rates.find(rate => rate.hireOption === option)?.price || ''}
-                        onChange={(e) => handleFieldChange(index, option, e.target.value)}
+                        value={equipment.rates[option.id] || ''}
+                        onChange={(e) => handleFieldChange(index, option.id, e.target.value)}
                       />
                     </td>
                   ))}
@@ -171,6 +174,11 @@ export const ManageEquipment = () => {
     </div>
   );
 };
+
+
+
+
+
 
 
 
