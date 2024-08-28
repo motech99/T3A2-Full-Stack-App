@@ -9,7 +9,9 @@ export const AuthGuard = ({ children }) => {
 
   React.useEffect(() => {
     if (!token) {
-      toast.error('You must be logged in to access this page.');
+      toast.error('You must be logged in to access this page.', {
+        position: 'top-center',
+      });
       navigate('/login');
     }
   }, [token, navigate]);
