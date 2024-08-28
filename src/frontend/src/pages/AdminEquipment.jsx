@@ -13,11 +13,11 @@ const ConfirmationDialog = ({ isVisible, onConfirm, onCancel }) => {
         <h1 className='title is-5 font-admin'>
           Are you sure you want to delete this equipment?
         </h1>
-        <div className='buttons'>
-          <button className='button is-danger' onClick={onConfirm}>
+        <div className='buttons buttons-admin'>
+          <button className='button is-danger button-admin' onClick={onConfirm}>
             Delete
           </button>
-          <button className='button is-dark' onClick={onCancel}>
+          <button className='button is-dark button-admin' onClick={onCancel}>
             Cancel
           </button>
         </div>
