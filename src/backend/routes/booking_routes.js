@@ -23,30 +23,30 @@ router.get('/bookings', verifyUser, async (req, res) => {
             return res.status(404).send({ error: 'No bookings found' });
         }
 
-        // // Calculate total prices for each booking
-        // const bookingsWithTotalPrice = bookings.map(booking => {
-        //     let totalPrice = 0;
-        //     if (booking.equipment && booking.hireOption) {
-        //         const matchingRate = booking.equipment.rates.find(rate => 
-        //             rate.hireOption.toString() === booking.hireOption._id.toString()
-        //         );
+        // Calculate total prices for each booking
+        const bookingsWithTotalPrice = bookings.map(booking => {
+            let totalPrice = 0;
+            if (booking.equipment && booking.hireOption) {
+                const matchingRate = booking.equipment.rates.find(rate => 
+                    rate.hireOption.toString() === booking.hireOption._id.toString()
+                );
 
-        //         if (matchingRate) {
-        //             totalPrice = matchingRate.price * booking.quantity;
-        //         }
+                if (matchingRate) {
+                    totalPrice = matchingRate.price * booking.quantity;
+                }
 
-        //         // Return only the matching rate
-        //         booking.equipment.rates = [matchingRate];
-        //     }
+                // Return only the matching rate
+                booking.equipment.rates = [matchingRate];
+            }
 
-        //     return {
-        //         ...booking.toObject(),
-        //         totalPrice
-        //     };
-        // });
+            return {
+                ...booking.toObject(),
+                totalPrice
+            };
+        });
 
-        // return res.send(bookingsWithTotalPrice);
-        return res.send(bookings);
+        return res.send(bookingsWithTotalPrice);
+        // return res.send(bookings);
 
     } catch (err) {
         res.status(400).send({ error: err.message });
