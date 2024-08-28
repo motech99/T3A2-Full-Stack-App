@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { describe, it, expect, beforeEach, vi } from 'vitest'; // Import vi from vitest
+import { describe, it, expect, beforeEach, vi } from 'vitest'; 
 
 import { Equipment } from '../pages/Equipment';
 
@@ -23,7 +23,7 @@ const mockHireOptions = {
   '2': '2 hours',
 };
 
-// Mock data
+// Mock Equipment data
 const mockEquipmentData = [
   {
     _id: '1',
