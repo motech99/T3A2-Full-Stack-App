@@ -97,7 +97,7 @@ const Navbar = () => {
               </Link>
             </>
           )}
-
+          
           {/* Admin Dropdown */}
           {isAdmin && (
             <div className='navbar-item has-dropdown is-hoverable'>

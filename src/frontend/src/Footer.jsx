@@ -22,7 +22,7 @@ export const Footer = () => {
             <div className='column has-text-right is-full-mobile has-text-centered-mobile'>
               {/* Icons */}
               <a href='https://github.com/motech99/T3A2-Full-Stack-App'>
-                <i class='fa-brands fa-github fa-xl'></i>
+                <i className='fa-brands fa-github fa-xl'></i>
               </a>
             </div>
           </div>

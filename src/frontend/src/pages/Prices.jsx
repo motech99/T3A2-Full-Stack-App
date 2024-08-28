@@ -1,8 +1,11 @@
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { EQUIPMENT_URL } from './Equipment.jsx';
 import './styles/Prices.css';
 
 export const Prices = () => {
+  const nav = useNavigate();
   const { data, isLoading, error } = useQuery({
     queryKey: ['prices'],
     queryFn: () => fetch(EQUIPMENT_URL).then((res) => res.json()),
@@ -10,6 +13,17 @@ export const Prices = () => {
 
   if (isLoading) return <h1 className='title headings'>Loading...</h1>;
   if (error) return <p>Error: {error.message}</p>;
+
+  const handleBookNowClick = () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      // Redirect to login page if not logged in
+      nav('/login');
+    } else {
+      // Navigate to make booking page if logged in
+      nav('/make-booking');
+    }
+  };
 
   return (
     <div className='equipment-container'>
@@ -54,7 +68,9 @@ export const Prices = () => {
                         )}
                       </tbody>
                     </table>
-                    <button className='mt-4 button is-warning is-fullwidth'>
+                    <button
+                      className='mt-4 button is-warning is-fullwidth'
+                      onClick={handleBookNowClick}>
                       Book now
                     </button>
                   </div>
