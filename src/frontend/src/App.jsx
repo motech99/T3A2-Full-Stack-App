@@ -1,4 +1,5 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import { Booking } from './pages/Booking';
 import { Equipment } from './pages/Equipment';
@@ -11,9 +12,7 @@ import { Error } from './pages/Error';
 import { MakeBooking } from './pages/MakeBooking';
 import { ManageEquipment } from './pages/AdminEquipment';
 import { AddEquipment } from './pages/AddEquipment';
-import { EditBooking } from './pages/EditBooking';
-
-
+import { AuthGuard, AdminGuard } from './Guards'; // Import guards
 
 function App() {
   const location = useLocation();
@@ -27,11 +26,38 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/equipment' element={<Equipment />} />
-          <Route path='/manage-equipment' element={<ManageEquipment />} />
-          <Route path='/equipment/add' element={<AddEquipment />} />
-          <Route path='/bookings' element={<Booking />} />
-          <Route path='/make-booking' element={<MakeBooking />} />
-          <Route path='/edit-booking/:bookingId' element={<EditBooking />} />
+          <Route
+            path='/manage-equipment'
+            element={
+              <AdminGuard>
+                <ManageEquipment />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path='/equipment/add'
+            element={
+              <AdminGuard>
+                <AddEquipment />
+              </AdminGuard>
+            }
+          />
+          <Route
+            path='/bookings'
+            element={
+              <AuthGuard>
+                <Booking />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path='/make-booking'
+            element={
+              <AuthGuard>
+                <MakeBooking />
+              </AuthGuard>
+            }
+          />
           <Route path='/prices' element={<Prices />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />
