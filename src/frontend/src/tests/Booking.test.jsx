@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, it, expect, beforeEach, vi } from 'vitest'; 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Booking } from '../pages/Booking';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
