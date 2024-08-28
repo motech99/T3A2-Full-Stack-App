@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, vi, expect, beforeEach } from 'vitest';
 import { ManageEquipment } from '../pages/AdminEquipment';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
