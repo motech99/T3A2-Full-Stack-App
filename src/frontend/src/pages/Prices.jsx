@@ -11,7 +11,7 @@ export const Prices = () => {
     queryFn: () => fetch(EQUIPMENT_URL).then((res) => res.json()),
   });
 
-  if (isLoading) return <h1 className='title headings'>Loading...</h1>;
+  if (isLoading) return <h1 className='title headings'>LOADING...</h1>;
   if (error) return <p>Error: {error.message}</p>;
 
   const handleBookNowClick = () => {
