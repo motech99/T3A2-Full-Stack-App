@@ -33,12 +33,6 @@ export const Prices = () => {
                     </h1>
                     <table className='table is-fullwidth mt-4 is-striped table-color is-hoverable'>
                       <tbody>
-                        <tr>
-                          <th className='price-heading-table'>QUANTITY</th>
-                          <td className='price-heading-table'>
-                            {equipment.quantity}
-                          </td>
-                        </tr>
                         {equipment.rates.length > 0 && (
                           <>
                             <tr>
