@@ -39,6 +39,7 @@ export const Login = () => {
         const data = await res.json();
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('firstName', data.firstName);
+        localStorage.setItem('isAdmin', data.isAdmin ? 'true' : 'false'); // Set isAdmin in localStorage
         nav('/bookings');
         window.location.reload(); // Refresh the page to update the Navbar
       } else {

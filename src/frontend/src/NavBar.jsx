@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [isActive, setIsActive] = useState(false);
   const nav = useNavigate();
@@ -10,7 +11,10 @@ const Navbar = () => {
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     const name = localStorage.getItem('firstName');
+    const adminStatus = localStorage.getItem('isAdmin');
+
     setIsLoggedIn(!!token);
+    setIsAdmin(adminStatus === 'true');
     setFirstName(name || '');
   }, []);
 
@@ -25,9 +29,20 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('firstName');
+    localStorage.removeItem('isAdmin');
     setIsLoggedIn(false);
+    setIsAdmin(false);
     closeMenu();
     nav('/login');
+  };
+
+  const handleLinkClick = (path) => {
+    if (!isLoggedIn && (path === '/bookings' || path === '/make-booking')) {
+      nav('/login');
+    } else if (path.startsWith('/admin') && !isAdmin) {
+      nav('/'); // Redirect to homepage or another page if not authorized
+    }
+    closeMenu();
   };
 
   return (
@@ -57,47 +72,53 @@ const Navbar = () => {
           <Link
             to='/equipment'
             className='navbar-item custom-font'
-            onClick={closeMenu}>
+            onClick={() => handleLinkClick('/equipment')}>
             Equipment
           </Link>
           <Link
             to='/prices'
             className='navbar-item custom-font'
-            onClick={closeMenu}>
+            onClick={() => handleLinkClick('/prices')}>
             Prices
           </Link>
-          <Link
-            to='/bookings'
-            className='navbar-item custom-font'
-            onClick={closeMenu}>
-            Manage Booking
-          </Link>
-          <Link
-            to='/make-booking'
-            className='navbar-item custom-font'
-            onClick={closeMenu}>
-            Make Booking
-          </Link>
+          {isLoggedIn && (
+            <>
+              <Link
+                to='/bookings'
+                className='navbar-item custom-font'
+                onClick={() => handleLinkClick('/bookings')}>
+                Manage Booking
+              </Link>
+              <Link
+                to='/make-booking'
+                className='navbar-item custom-font'
+                onClick={() => handleLinkClick('/make-booking')}>
+                Make Booking
+              </Link>
+            </>
+          )}
 
           {/* Admin Dropdown */}
-          <div className='navbar-item has-dropdown is-hoverable'>
-            <a className='navbar-link'>Admin</a>
+          {isAdmin && (
+            <div className='navbar-item has-dropdown is-hoverable'>
+              <a className='navbar-link'>Admin</a>
 
-            <div className='navbar-dropdown'>
-              <Link
-                to='/manage-equipment'
-                className='navbar-item custom-font'
-                onClick={closeMenu}>
-                Manage Equipment
-              </Link>
-              <Link
-                to='/equipment/add'
-                className='navbar-item custom-font'
-                onClick={closeMenu}>
-                Add Equipment
-              </Link>
+              <div className='navbar-dropdown'>
+                <Link
+                  to='/manage-equipment'
+                  className='navbar-item custom-font'
+                  onClick={() => handleLinkClick('/manage-equipment')}>
+                  Manage Equipment
+                </Link>
+                <Link
+                  to='/equipment/add'
+                  className='navbar-item custom-font'
+                  onClick={() => handleLinkClick('/equipment/add')}>
+                  Add Equipment
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className='navbar-end'>
