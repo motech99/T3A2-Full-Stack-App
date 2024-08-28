@@ -67,6 +67,11 @@ router.post('/bookings', verifyUser, async (req, res) => {
         if (isNaN(start.getTime())) {
             return res.status(400).send({ error: 'Invalid start time format.' });
         }
+        
+        // Subtract 10 hours from start time if in correct format
+        if(start) {
+            start.setHours(start.getHours() - 10);
+        }
 
         // Fetch HireOption to get the hire length
         const hireOptionDoc = await HireOption.findById(hireOption);
