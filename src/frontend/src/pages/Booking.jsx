@@ -44,6 +44,11 @@ export const Booking = () => {
     return <h1 className='title headings'>No current bookings</h1>;
   }
 
+  // Sort bookings by startTime in descending order
+  const sortedBookings = [...bookings].sort(
+    (a, b) => new Date(b.startTime) - new Date(a.startTime)
+  );
+
   return (
     <section className='background-booking'>
       <div className='equipment-container'>
@@ -51,7 +56,7 @@ export const Booking = () => {
           MANAGE BOOKINGS
         </h1>
         <div className='columns is-multiline is-centered'>
-          {bookings.map((booking) => (
+          {sortedBookings.map((booking) => (
             <div
               key={booking._id}
               className='column is-5-desktop is-8-tablet is-12-mobile equipment-sizing'>
