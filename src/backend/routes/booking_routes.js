@@ -46,6 +46,7 @@ router.get('/bookings', verifyUser, async (req, res) => {
         });
 
         return res.send(bookingsWithTotalPrice);
+        // return res.send(bookings);
 
     } catch (err) {
         res.status(400).send({ error: err.message });
@@ -66,6 +67,11 @@ router.post('/bookings', verifyUser, async (req, res) => {
         const start = new Date(startTime);
         if (isNaN(start.getTime())) {
             return res.status(400).send({ error: 'Invalid start time format.' });
+        }
+        
+        // Subtract 10 hours from start time if in correct format
+        if(start) {
+            start.setHours(start.getHours() - 10);
         }
 
         // Fetch HireOption to get the hire length
