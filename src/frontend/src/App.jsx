@@ -14,6 +14,7 @@ import { AddEquipment } from './pages/AddEquipment';
 import { EditBooking } from './pages/EditBooking';
 
 
+
 function App() {
   const location = useLocation();
 
