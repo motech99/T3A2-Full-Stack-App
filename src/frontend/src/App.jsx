@@ -11,6 +11,7 @@ import { Error } from './pages/Error';
 import { MakeBooking } from './pages/MakeBooking';
 import { ManageEquipment } from './pages/AdminEquipment';
 import { AddEquipment } from './pages/AddEquipment';
+import { EditBooking } from './pages/EditBooking';
 
 
 function App() {
@@ -24,11 +25,12 @@ function App() {
       <div className='is-flex-grow-1'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/equipment' element={<Equipment />}/>
+          <Route path='/equipment' element={<Equipment />} />
           <Route path='/manage-equipment' element={<ManageEquipment />} />
           <Route path='/equipment/add' element={<AddEquipment />} />
           <Route path='/bookings' element={<Booking />} />
           <Route path='/make-booking' element={<MakeBooking />} />
+          <Route path='/edit-booking/:bookingId' element={<EditBooking />} />
           <Route path='/prices' element={<Prices />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/login' element={<Login />} />

@@ -1,6 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { useNavigate } from 'react-router-dom';
 import './styles/Booking.css';
 
+// Fetch user bookings function
 const fetchUserBookings = async () => {
   const response = await fetch(
     'https://t3a2-full-stack-app-api.onrender.com/bookings',
@@ -18,7 +21,30 @@ const fetchUserBookings = async () => {
   return response.json();
 };
 
+// Function to delete a booking
+const deleteBooking = async (bookingId) => {
+  const response = await fetch(
+    `https://t3a2-full-stack-app-api.onrender.com/bookings/${bookingId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to delete booking');
+  }
+  return response.json();
+};
+
 export const Booking = () => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  // Fetch user bookings
   const {
     data: bookings,
     isLoading,
@@ -28,6 +54,20 @@ export const Booking = () => {
     queryKey: ['userBookings'],
     queryFn: fetchUserBookings,
   });
+
+  // Mutation to delete a booking
+const deleteMutation = useMutation(deleteBooking);
+
+
+  const handleDelete = (bookingId) => {
+    if (window.confirm('Are you sure you want to delete this booking?')) {
+      deleteMutation.mutate(bookingId);
+    }
+  };
+
+  const handleEdit = (bookingId) => {
+    navigate(`/edit-booking/${bookingId}`); // Navigate to the edit booking page
+  };
 
   if (isLoading) return <h1 className='title headings'>Loading...</h1>;
 
@@ -95,6 +135,18 @@ export const Booking = () => {
                           </tr>
                         </tbody>
                       </table>
+                      <div className='buttons are-small mt-4'>
+                        <button
+                          className='button is-info'
+                          onClick={() => handleEdit(booking._id)}>
+                          Edit Booking
+                        </button>
+                        <button
+                          className='button is-danger'
+                          onClick={() => handleDelete(booking._id)}>
+                          Delete Booking
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
