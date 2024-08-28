@@ -6,25 +6,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/AdminEquipment.css';
 
-const ConfirmationDialog = ({ isVisible, onConfirm, onCancel }) => {
-  return (
-    <div className={`confirmation-dialog ${isVisible ? 'is-active' : ''}`}>
-      <div className='confirmation-content'>
-        <h1 className='title is-5 font-admin'>
-          Are you sure you want to delete this equipment?
-        </h1>
-        <div className='buttons buttons-admin'>
-          <button className='button is-danger button-admin' onClick={onConfirm}>
-            Delete
-          </button>
-          <button className='button is-dark button-admin' onClick={onCancel}>
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 export const ManageEquipment = () => {
   const [showDialog, setShowDialog] = useState(false);
@@ -113,56 +94,6 @@ export const ManageEquipment = () => {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async (equipmentId) => {
-      const token = localStorage.getItem('authToken');
-
-      console.log('Deleting equipment with ID:', equipmentId); // Debugging log
-
-      const response = await fetch(
-        `https://t3a2-full-stack-app-api.onrender.com/equipment/${equipmentId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const errorResponse = await response.json();
-        console.error('Error response from server:', errorResponse); // Log error response from server
-        throw new Error(errorResponse.error || 'Error deleting equipment');
-      }
-
-      return response.json();
-    },
-    onMutate: async (equipmentId) => {
-      await queryClient.cancelQueries(['equipment']);
-      const previousData = queryClient.getQueryData(['equipment']);
-
-      queryClient.setQueryData(['equipment'], (oldData) =>
-        oldData.filter((equipment) => equipment._id !== equipmentId)
-      );
-
-      return { previousData };
-    },
-    onError: (err, equipmentId, context) => {
-      queryClient.setQueryData(['equipment'], context.previousData);
-      toast.error(`Error deleting equipment: ${err.message}`, {
-        position: 'top-center',
-      });
-    },
-    onSuccess: () => {
-      toast.success('Equipment deleted successfully!', {
-        position: 'top-center',
-      });
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries(['equipment']);
-    },
-  });
-
   const handleFieldChange = (index, hireOptionId, value) => {
     const updatedData = [...equipmentData];
     if (hireOptionId === 'quantity') {
@@ -183,24 +114,6 @@ export const ManageEquipment = () => {
       })),
     };
     updateMutation.mutate(updatedEquipment);
-  };
-
-  const handleDelete = (equipmentId) => {
-    setEquipmentToDelete(equipmentId);
-    setShowDialog(true);
-  };
-
-  const confirmDelete = () => {
-    if (equipmentToDelete) {
-      deleteMutation.mutate(equipmentToDelete);
-      setShowDialog(false);
-      setEquipmentToDelete(null);
-    }
-  };
-
-  const cancelDelete = () => {
-    setShowDialog(false);
-    setEquipmentToDelete(null);
   };
 
   if (isLoading) return <h1 className='title headings'>Loading...</h1>;
@@ -269,12 +182,6 @@ export const ManageEquipment = () => {
                       onClick={() => handleUpdate(index)}>
                       Update
                     </button>
-                    <button
-                      type='button'
-                      className='button is-danger is-fullwidth'
-                      onClick={() => handleDelete(equipment._id)}>
-                      Delete
-                    </button>
                   </div>
                 </div>
               </div>
@@ -282,11 +189,6 @@ export const ManageEquipment = () => {
           ))}
         </div>
       </div>
-      <ConfirmationDialog
-        isVisible={showDialog}
-        onConfirm={confirmDelete}
-        onCancel={cancelDelete}
-      />
       <ToastContainer />
     </div>
   );
