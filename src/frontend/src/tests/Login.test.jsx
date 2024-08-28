@@ -12,9 +12,6 @@ globalThis.fetch = vi.fn(() =>
   })
 );
 
-// Mock useNavigate
-const mockNavigate = vi.fn();
-
 const renderWithRouter = (component) => {
     return render(<Router>{component}</Router>);
   };
@@ -75,7 +72,6 @@ describe('Login Component', () => {
       })
     );
 
-
-})
+    })
 
 })
