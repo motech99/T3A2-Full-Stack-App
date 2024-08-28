@@ -55,7 +55,7 @@ const deleteBooking = async (bookingId) => {
     throw new Error('Failed to delete booking');
   }
 
-  return response.text(); // Returning the plain text response
+  return response.text(); 
 };
 
 export const Booking = () => {
@@ -82,9 +82,7 @@ export const Booking = () => {
     } catch (error) {
       console.error('Error fetching bookings:', error);
       if (!toastShown.current) {
-        toast.warn(
-          'Warning: Error fetching bookings. Try making a new booking?'
-        );
+        // Removed warning toast
         toastShown.current = true;
       }
       setIsLoading(false);
@@ -122,9 +120,7 @@ export const Booking = () => {
 
             // Check if there are no bookings left and show a message
             if (newBookings.length === 0) {
-              toast.warn('No current bookings available.', {
-                position: 'top-center',
-              });
+              // Removed warning toast
             }
           } catch (error) {
             toast.error(`Failed to delete booking: ${error.message}`, {
@@ -135,7 +131,7 @@ export const Booking = () => {
             setDialogVisible(false);
             setSelectedBookingId(null);
           }
-        }, 300); // Adjust delay if needed
+        }, 300); 
       } catch (error) {
         toast.error(`Failed to delete booking: ${error.message}`, {
           position: 'top-center',
@@ -155,7 +151,6 @@ export const Booking = () => {
   if (isLoading) return <h1 className='title headings'>LOADING...</h1>;
 
   if (bookings.length === 0) {
-    toast.warn('No current bookings available');
     return <h1 className='title headings'>NO CURRENT BOOKINGS</h1>;
   }
 
