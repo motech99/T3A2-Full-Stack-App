@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { EQUIPMENT_URL } from './Equipment.jsx';
 import FormRow from './components/FormRow';
-import './styles/MakeBooking.css'
-
+import './styles/MakeBooking.css';
 
 const MAKEBOOKING_URL = 'https://t3a2-full-stack-app-api.onrender.com/bookings';
 
@@ -118,23 +117,6 @@ export const MakeBooking = () => {
     });
   };
 
-  // Function to validate the booking time
-  const validateTime = (time) => {
-    const [date, timePart] = time.split('T');
-    const [hour, minute] = timePart.split(':').map(Number);
-
-    const now = new Date(date);
-    now.setHours(hour, minute, 0, 0);
-
-    const open = new Date(date);
-    open.setHours(7, 5, 0, 0); // 7:05 AM
-
-    const close = new Date(date);
-    close.setHours(19, 0, 0, 0); // 7:00 PM
-
-    return now >= open && now <= close;
-  };
-
   // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -147,11 +129,6 @@ export const MakeBooking = () => {
       formData.quantity < 1
     ) {
       setErrorMessage('Please fill in all fields correctly.');
-      return;
-    }
-
-    if (!validateTime(formData.startTime)) {
-      setErrorMessage('The booking time must be between 7:05 AM and 7:00 PM.');
       return;
     }
 
@@ -193,7 +170,7 @@ export const MakeBooking = () => {
 
   // Display loading or error message while fetching data
   if (isLoading) return <h1 className='title headings'>Loading...</h1>;
-  if (isError) return <h1 className='title headings'>Error loading data.</h1>;
+  if (isError) return <h1 className='title headings'>Error loading data</h1>;
 
   return (
     <section className='background-equipment'>
