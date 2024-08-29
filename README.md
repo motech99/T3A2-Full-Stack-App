@@ -2,12 +2,29 @@
 
 ## Table of Contents
 
-- [Description](#description)
+- [Our Application Link](#our-application)
+- [Our GitHub Repository Link](#our-github-repository)
+- [App Description](#description)
 - [Dataflow Diagrams](#dataflow-diagrams)
 - [Application Architecture Diagram](#application-architecture-diagram)
 - [User Stories](#user-stories)
 - [Wireframes](#wireframes)
 - [Trello](#trello)
+
+## Our Application
+
+Our Full Stack Web Application can be viewd [here.](https://main--gc-activity-rentals.netlify.app/)
+
+### Admin Login
+
+In order to view the admin functionality of our app please use the following login details:
+
+- **Email:** <admintest@example.com>
+- **Password:** admintest123
+
+## Our GitHub Repository
+
+The full GitHub repository for this project can be viewed [here.](https://github.com/motech99/T3A2-Full-Stack-App)
 
 ## Description
 
@@ -38,7 +55,6 @@ The admin of this application will be able to view all of the bookings that have
 The application will be targeted at members of the general public looking for an activity on the Gold Coast. The web application is strategically designed to cater to a diverse audience with varying needs and preferences. It is accessible and user friendly for individuals of all backgrounds and abilities. Whether the user is a local Gold Coast resident, or an international visitor, the web application ensures an intuitive navigation to ensure seamless access equipment hire.
 
 #### Tech Stack and Libraries
-
 
 - **JavaScript**: A versatile, high-level programming language used primarily for creating interactive web applications. It runs in browsers and on the server-side with Node.js, enabling dynamic content, event handling, and more.
 - **Node.js**: A JavaScript runtime built on Chrome's V8 engine, enabling you to run JavaScript on the server side. It's designed for building scalable network applications and is known for its non-blocking, event-driven architecture.
@@ -266,3 +282,15 @@ In addition to this, as we progressed through the rest of the project and starte
 #### Trello Board at End of Part A (18/08/2024)
 
 ![Screenshot of Trello Board on 18/08/2024](./docs/trello_final_part_a.png)
+
+#### Trello Board at Start of Part B (19/08/2024)
+
+![Screenshot of Trello Board on 19/08/2024](./docs/trello_start_part_b.png)
+
+#### Trello Board at Middle of Part B (24/08/2024)
+
+![Screenshot of Trello Board on 24/08/2024](./docs/trello_middle_part_b.png)
+
+#### Trello Board at End of Part B (29/08/2024)
+
+![Screenshot of Trello Board on 29/08/2024](./docs/trello_end_part_b.png)
